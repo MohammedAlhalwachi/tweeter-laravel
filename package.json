@@ -33,7 +33,6 @@
         "webpack-bundle-analyzer": "^4.3.0"
     },
     "dependencies": {
-        "@inertiajs/progress": "^0.2.3",
-        "nprogress": "^0.2.0"
+        "@inertiajs/progress": "^0.2.3"
     }
 }
