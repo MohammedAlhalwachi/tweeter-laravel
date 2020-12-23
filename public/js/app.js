@@ -99,6 +99,19 @@ var e=__webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/i
 
 /***/ }),
 
+/***/ "./node_modules/@inertiajs/inertia-vue3/dist/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@inertiajs/inertia-vue3/dist/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var e=__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"),t=__webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");function r(){return(r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e}).apply(this,arguments)}var n={props:{as:{type:String,default:"a"},data:{type:Object,default:function(){return{}}},href:{type:String,required:!0},method:{type:String,default:"get"},replace:{type:Boolean,default:!1},preserveScroll:{type:Boolean,default:!1},preserveState:{type:Boolean,default:null},only:{type:Array,default:function(){return[]}},headers:{type:Object,default:function(){return{}}}},setup:function(n,o){var a=o.slots,i=o.attrs;return function(n){var o=n.as.toLowerCase(),u=n.method.toLowerCase(),s=t.mergeDataIntoQueryString(u,t.hrefToUrl(n.href),n.data),p=s[0],l=s[1];return"a"===o&&"get"!==u&&console.warn('Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<inertia-link href="'+p.href+'" method="'+u+'" as="button">...</inertia-link>'),e.h(n.as,r({},i,"a"===o?{href:p.href}:{},{onClick:function(e){var r;t.shouldIntercept(e)&&(e.preventDefault(),t.Inertia.visit(p.href,{data:l,method:u,replace:n.replace,preserveScroll:n.preserveScroll,preserveState:null!=(r=n.preserveState)?r:"get"!==u,only:n.only,headers:n.headers,onCancelToken:i.onCancelToken||function(){return{}},onBefore:i.onBefore||function(){return{}},onStart:i.onStart||function(){return{}},onProgress:i.onProgress||function(){return{}},onFinish:i.onFinish||function(){return{}},onCancel:i.onCancel||function(){return{}},onSuccess:i.onSuccess||function(){return{}}}))}}),a.default())}}},o={created:function(){var e=this;if(this.$options.remember){Array.isArray(this.$options.remember)&&(this.$options.remember={data:this.$options.remember}),"string"==typeof this.$options.remember&&(this.$options.remember={data:[this.$options.remember]}),"string"==typeof this.$options.remember.data&&(this.$options.remember={data:[this.$options.remember.data]});var n=this.$options.remember.key instanceof Function?this.$options.remember.key.call(this):this.$options.remember.key,o=t.Inertia.restore(n);this.$options.remember.data.forEach(function(a){void 0!==o&&void 0!==o[a]&&(e[a]=o[a]),e.$watch(a,function(){t.Inertia.remember(e.$options.remember.data.reduce(function(t,n){var o;return r({},t,((o={})[n]=JSON.parse(JSON.stringify(e[n])),o))},{}),n)},{immediate:!0,deep:!0})})}}},a=e.ref(null),i=e.ref({}),u=e.ref(null),s={name:"Inertia",props:{initialPage:{type:Object,required:!0},resolveComponent:{type:Function,required:!0},transformProps:{type:Function,default:function(e){return e}}},setup:function(n){return t.Inertia.init({initialPage:n.initialPage,resolveComponent:n.resolveComponent,transformProps:n.transformProps,swapComponent:function(t){try{return a.value=e.markRaw(t.component),i.value=t.page,u.value=t.preserveState?u.value:Date.now(),Promise.resolve()}catch(e){return Promise.reject(e)}}}),function(){if(a.value){var t=e.h(a.value,r({},i.value.props,{key:u.value}));return a.value.layout?"function"==typeof a.value.layout?a.value.layout(e.h,t):Array.isArray(a.value.layout)?a.value.layout.concat(t).reverse().reduce(function(t,r){return e.h(r,[t])}):e.h(a.value.layout,function(){return t}):t}}}},p={install:function(e){Object.defineProperty(e.config.globalProperties,"$inertia",{get:function(){return t.Inertia}}),Object.defineProperty(e.config.globalProperties,"$page",{get:function(){return i.value}}),e.mixin(o),e.component("InertiaLink",n)}};exports.App=s,exports.Link=n,exports.app=s,exports.link=n,exports.plugin=p,exports.usePage=function(){return{props:e.computed(function(){return i.value.props}),url:e.computed(function(){return i.value.url}),component:e.computed(function(){return i.value.component}),version:e.computed(function(){return i.value.version})}};
+//# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@inertiajs/inertia/dist/index.js":
 /*!*******************************************************!*\
   !*** ./node_modules/@inertiajs/inertia/dist/index.js ***!
@@ -5886,9 +5899,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+exports.useForm = useForm;
+
+var _inertia = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/laravel-jetstream/node_modules/@inertiajs/inertia/dist/index.js");
+
+var _vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 var _util = __webpack_require__(/*! ./util */ "./node_modules/laravel-jetstream/dist/util/index.js");
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5902,8 +5925,21 @@ var InertiaForm = function () {
         this.processing = false;
         this.successful = false;
         this.recentlySuccessful = false;
+        this.isDirty = false;
 
         this.withData(data).withOptions(options);
+
+        return new Proxy(this, {
+            set: function set(obj, prop, value) {
+                obj[prop] = value;
+
+                if (_util.reservedFieldNames.indexOf(prop) === -1 && value !== obj.initial[prop]) {
+                    obj.isDirty = true;
+                }
+
+                return true;
+            }
+        });
     }
 
     _createClass(InertiaForm, [{
@@ -5927,6 +5963,8 @@ var InertiaForm = function () {
                 this[field] = data[field];
             }
 
+            this.isDirty = false;
+
             return this;
         }
     }, {
@@ -5934,7 +5972,8 @@ var InertiaForm = function () {
         value: function withOptions(options) {
             this.__options = {
                 bag: 'default',
-                resetOnSuccess: true
+                resetOnSuccess: true,
+                setInitialOnSuccess: false
             };
 
             if (options.hasOwnProperty('bag')) {
@@ -5943,6 +5982,10 @@ var InertiaForm = function () {
 
             if (options.hasOwnProperty('resetOnSuccess')) {
                 this.__options.resetOnSuccess = options.resetOnSuccess;
+            }
+
+            if (options.hasOwnProperty('setInitialOnSuccess')) {
+                this.__options.setInitialOnSuccess = options.setInitialOnSuccess;
             }
 
             return this;
@@ -5964,7 +6007,9 @@ var InertiaForm = function () {
     }, {
         key: 'data',
         value: function data() {
-            var data = {};
+            var data = {
+                '_error_bag': this.__options.bag
+            };
 
             for (var property in this.initial) {
                 data[property] = this[property];
@@ -5976,6 +6021,8 @@ var InertiaForm = function () {
         key: 'reset',
         value: function reset() {
             (0, _util.merge)(this, this.initial);
+
+            this.isDirty = false;
         }
     }, {
         key: 'setInitialValues',
@@ -6020,7 +6067,7 @@ var InertiaForm = function () {
             this.processing = true;
             this.successful = false;
 
-            var then = function then() {
+            var onSuccess = function onSuccess(page) {
                 _this.processing = false;
 
                 if (!_this.hasErrors()) {
@@ -6028,13 +6075,17 @@ var InertiaForm = function () {
                 } else {
                     _this.onFail();
                 }
+
+                if (options.onSuccess) {
+                    options.onSuccess(page);
+                }
             };
 
             if (requestType === 'delete') {
-                return this.__inertia[requestType](url, options).then(then);
+                return this.__inertia[requestType](url, _extends({}, options, { onSuccess: onSuccess }));
             }
 
-            return this.__inertia[requestType](url, this.hasFiles() ? (0, _util.objectToFormData)(this.data()) : this.data(), options).then(then);
+            return this.__inertia[requestType](url, this.hasFiles() ? (0, _util.objectToFormData)(this.data()) : this.data(), _extends({}, options, { onSuccess: onSuccess }));
         }
     }, {
         key: 'hasFiles',
@@ -6088,6 +6139,13 @@ var InertiaForm = function () {
 
             if (this.__options.resetOnSuccess) {
                 this.reset();
+            } else if (this.__options.setInitialOnSuccess) {
+                var _data = this.data(),
+                    _error_bag = _data._error_bag,
+                    data = _objectWithoutProperties(_data, ['_error_bag']);
+
+                this.setInitialValues(data);
+                this.isDirty = false;
             }
         }
     }, {
@@ -6102,18 +6160,29 @@ var InertiaForm = function () {
             return this.inertiaPage().errorBags[this.__options.bag] && Object.keys(this.inertiaPage().errorBags[this.__options.bag]).length > 0;
         }
     }, {
+        key: 'hasError',
+        value: function hasError(field) {
+            return this.hasErrors() && this.inertiaPage().errorBags[this.__options.bag][field] && this.inertiaPage().errorBags[this.__options.bag][field].length > 0;
+        }
+    }, {
         key: 'error',
         value: function error(field) {
-            if (!this.hasErrors() || !this.inertiaPage().errorBags[this.__options.bag][field] || this.inertiaPage().errorBags[this.__options.bag][field].length == 0) {
-                return;
+            if (this.hasError(field)) {
+                return this.inertiaPage().errorBags[this.__options.bag][field][0];
             }
-
-            return this.inertiaPage().errorBags[this.__options.bag][field][0];
         }
     }, {
         key: 'errors',
-        value: function errors(field) {
-            return this.error(field) ? this.inertiaPage().errorBags[this.__options.bag][field] : [];
+        value: function errors() {
+            var field = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+            if (field === null) {
+                return this.hasErrors() ? Object.values(this.inertiaPage().errorBags[this.__options.bag]).reduce(function (a, b) {
+                    return a.concat(b);
+                }, []) : [];
+            }
+
+            return this.hasError(field) ? this.inertiaPage().errorBags[this.__options.bag][field] : [];
         }
     }, {
         key: 'inertiaPage',
@@ -6141,16 +6210,38 @@ var InertiaForm = function () {
     return InertiaForm;
 }();
 
-exports.default = {
-    install: function install(Vue) {
-        Vue.prototype.$inertia.form = function () {
-            var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-            var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+function useForm(data, options) {
+    var adapter = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 
-            return InertiaForm.create().withData(data).withOptions(options).withInertia(Vue.prototype.$inertia).withPage(function () {
-                return Vue.prototype.$page;
+    if (!adapter || !_vue.shallowReactive) throw Error('The useForm hook may only be used with Vue 3 and @inertiajs/inertia-vue3.');
+
+    return (0, _vue.shallowReactive)(InertiaForm.create().withData(data).withOptions(options).withInertia(_inertia.Inertia).withPage(function () {
+        return adapter.usePage().props.value;
+    }));
+}
+
+exports.default = {
+    install: function install(app) {
+        if (app.version.split('.')[0] == 3) {
+            Object.defineProperty(app.config.globalProperties.$inertia, 'form', {
+                value: function value() {
+                    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                    return InertiaForm.create().withData(data).withOptions(options).withInertia(app.config.globalProperties.$inertia).withPage(function () {
+                        return app.config.globalProperties.$page.hasOwnProperty('props') ? app.config.globalProperties.$page.props : app.config.globalProperties.$page;
+                    });
+                }
             });
-        };
+        } else {
+            app.prototype.$inertia.form = function () {
+                var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+                return InertiaForm.create().withData(data).withOptions(options).withInertia(app.prototype.$inertia).withPage(function () {
+                    return app.prototype.$page.hasOwnProperty('props') ? app.prototype.$page.props : app.prototype.$page;
+                });
+            };
+        }
     }
 };
 
@@ -6178,6 +6269,12 @@ Object.defineProperty(exports, 'InertiaForm', {
     return _interopRequireDefault(_InertiaForm).default;
   }
 });
+Object.defineProperty(exports, 'useForm', {
+  enumerable: true,
+  get: function get() {
+    return _InertiaForm.useForm;
+  }
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6197,7 +6294,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.guardAgainstReservedFieldName = guardAgainstReservedFieldName;
-var reservedFieldNames = exports.reservedFieldNames = ['__options', '__inertia', '__page', '__validateRequestType', 'data', 'delete', 'errorFor', 'errorsFor', 'hasErrors', 'initial', 'onFail', 'onSuccess', 'patch', 'post', 'processing', 'put', 'reset', 'submit', 'successful', 'withData', 'withOptions'];
+var reservedFieldNames = exports.reservedFieldNames = ['__options', '__inertia', '__page', '__validateRequestType', 'data', 'delete', 'errorFor', 'errorsFor', 'hasErrors', 'initial', 'isDirty', 'onFail', 'onSuccess', 'patch', 'post', 'processing', 'put', 'recentlySuccessful', 'reset', 'submit', 'successful', 'withData', 'withOptions'];
 
 function guardAgainstReservedFieldName(fieldName) {
     if (reservedFieldNames.indexOf(fieldName) !== -1) {
@@ -6392,6 +6489,19 @@ function cloneDeep(object) {
 
     return object;
 }
+
+/***/ }),
+
+/***/ "./node_modules/laravel-jetstream/node_modules/@inertiajs/inertia/dist/index.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/laravel-jetstream/node_modules/@inertiajs/inertia/dist/index.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var e,t=(e=__webpack_require__(/*! axios */ "./node_modules/axios/index.js"))&&"object"==typeof e&&"default"in e?e.default:e;function i(){return(i=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var i=arguments[t];for(var n in i)Object.prototype.hasOwnProperty.call(i,n)&&(e[n]=i[n])}return e}).apply(this,arguments)}var n={modal:null,listener:null,show:function(e){var t=this;"object"==typeof e&&(e="All Inertia requests must receive a valid Inertia response, however a plain JSON response was received.<hr>"+JSON.stringify(e));var i=document.createElement("html");i.innerHTML=e,i.querySelectorAll("a").forEach(function(e){return e.setAttribute("target","_top")}),this.modal=document.createElement("div"),this.modal.style.position="fixed",this.modal.style.width="100vw",this.modal.style.height="100vh",this.modal.style.padding="50px",this.modal.style.boxSizing="border-box",this.modal.style.backgroundColor="rgba(0, 0, 0, .6)",this.modal.style.zIndex=2e5,this.modal.addEventListener("click",function(){return t.hide()});var n=document.createElement("iframe");n.style.backgroundColor="white",n.style.borderRadius="5px",n.style.width="100%",n.style.height="100%",this.modal.appendChild(n),document.body.prepend(this.modal),document.body.style.overflow="hidden",n.contentWindow.document.open(),n.contentWindow.document.write(i.outerHTML),n.contentWindow.document.close(),this.listener=this.hideOnEscape.bind(this),document.addEventListener("keydown",this.listener)},hide:function(){this.modal.outerHTML="",this.modal=null,document.body.style.overflow="visible",document.removeEventListener("keydown",this.listener)},hideOnEscape:function(e){27===e.keyCode&&this.hide()}};exports.Inertia={resolveComponent:null,swapComponent:null,transformProps:null,cancelToken:null,visitId:null,page:null,init:function(e){var t=e.initialPage,i=e.swapComponent,n=e.transformProps;this.resolveComponent=e.resolveComponent,this.swapComponent=i,this.transformProps=n,this.handleInitialPageVisit(t),this.setupEventListeners()},handleInitialPageVisit:function(e){this.isBackForwardVisit()?this.handleBackForwardVisit(e):this.isLocationVisit()?this.handleLocationVisit(e):(e.url+=window.location.hash,this.setPage(e)),this.fireEvent("navigate",{detail:{page:e}})},setupEventListeners:function(){var e,t;window.addEventListener("popstate",this.handlePopstateEvent.bind(this)),document.addEventListener("scroll",(e=this.handleScrollEvent.bind(this),t=null,function(){var i=arguments,n=this;clearTimeout(t),t=setTimeout(function(){return e.apply(n,i)},100)}),!0)},scrollRegions:function(){return document.querySelectorAll("[scroll-region]")},handleScrollEvent:function(e){"function"==typeof e.target.hasAttribute&&e.target.hasAttribute("scroll-region")&&this.saveScrollPositions()},saveScrollPositions:function(){this.replaceState(i({},this.page,{scrollRegions:Array.prototype.slice.call(this.scrollRegions()).map(function(e){return{top:e.scrollTop,left:e.scrollLeft}})}))},resetScrollPositions:function(){var e;document.documentElement.scrollTop=0,document.documentElement.scrollLeft=0,this.scrollRegions().forEach(function(e){e.scrollTop=0,e.scrollLeft=0}),this.saveScrollPositions(),window.location.hash&&(null==(e=document.getElementById(window.location.hash.slice(1)))||e.scrollIntoView())},restoreScrollPositions:function(){var e=this;this.page.scrollRegions&&this.scrollRegions().forEach(function(t,i){t.scrollTop=e.page.scrollRegions[i].top,t.scrollLeft=e.page.scrollRegions[i].left})},isBackForwardVisit:function(){return window.history.state&&window.performance&&window.performance.getEntriesByType("navigation").length&&"back_forward"===window.performance.getEntriesByType("navigation")[0].type},handleBackForwardVisit:function(e){var t=this;window.history.state.version=e.version,this.setPage(window.history.state,{preserveScroll:!0}).then(function(){t.restoreScrollPositions()})},locationVisit:function(e,t){try{window.sessionStorage.setItem("inertiaLocationVisit",JSON.stringify({preserveScroll:t})),window.location.href=e.href,this.urlWithoutHash(window.location).href===this.urlWithoutHash(e).href&&window.location.reload()}catch(e){return!1}},isLocationVisit:function(){try{return null!==window.sessionStorage.getItem("inertiaLocationVisit")}catch(e){return!1}},handleLocationVisit:function(e){var t,i,n,o,r=this,s=JSON.parse(window.sessionStorage.getItem("inertiaLocationVisit"));window.sessionStorage.removeItem("inertiaLocationVisit"),e.url+=window.location.hash,e.rememberedState=null!=(t=null==(i=window.history.state)?void 0:i.rememberedState)?t:{},e.scrollRegions=null!=(n=null==(o=window.history.state)?void 0:o.scrollRegions)?n:[],this.setPage(e,{preserveScroll:s.preserveScroll}).then(function(){s.preserveScroll&&r.restoreScrollPositions()})},isLocationVisitResponse:function(e){return e&&409===e.status&&e.headers["x-inertia-location"]},isInertiaResponse:function(e){return null==e?void 0:e.headers["x-inertia"]},cancelActiveVisits:function(){this.cancelToken&&this.cancelToken.cancel(),this.cancelToken=t.CancelToken.source()},createVisitId:function(){return this.visitId={},this.visitId},normalizeUrl:function(e){try{return e.startsWith("#")?new URL(""+this.urlWithoutHash(window.location)+e):new URL(e)}catch(t){return new URL(""+window.location.origin+e)}},urlWithoutHash:function(e){return(e=new URL(e.href)).hash="",e},visit:function(e,o){var r=this,s=void 0===o?{}:o,a=s.method,l=void 0===a?"get":a,c=s.data,h=void 0===c?{}:c,d=s.replace,u=void 0!==d&&d,p=s.preserveScroll,v=void 0!==p&&p,f=s.preserveState,m=void 0!==f&&f,w=s.only,g=void 0===w?[]:w,y=s.headers,S=void 0===y?{}:y,P=s.onCancelToken,b=void 0===P?function(){return{}}:P,E=s.onStart,L=void 0===E?function(){return{}}:E,I=s.onProgress,V=void 0===I?function(){return{}}:I,R=s.onFinish,C=void 0===R?function(){return{}}:R,k=s.onCancel,T=void 0===k?function(){return{}}:k,x=s.onSuccess,W=void 0===x?function(){return{}}:x,H=i({url:e=this.normalizeUrl(e)},arguments[1]);if(!1!==L(H)&&this.fireEvent("start",{cancelable:!0,detail:{visit:H}})){this.cancelActiveVisits(),this.saveScrollPositions();var U=this.createVisitId();return b(this.cancelToken),new Proxy(t({method:l,url:this.urlWithoutHash(e).href,data:"get"===l.toLowerCase()?{}:h,params:"get"===l.toLowerCase()?h:{},cancelToken:this.cancelToken.token,headers:i({},S,{Accept:"text/html, application/xhtml+xml","X-Requested-With":"XMLHttpRequest","X-Inertia":!0},g.length?{"X-Inertia-Partial-Component":this.page.component,"X-Inertia-Partial-Data":g.join(",")}:{},this.page.version?{"X-Inertia-Version":this.page.version}:{}),onUploadProgress:function(e){e.percentage=Math.round(e.loaded/e.total*100),r.fireEvent("progress",{detail:{progress:e}}),V(e)}}).then(function(t){if(!r.isInertiaResponse(t))return Promise.reject({response:t});g.length&&t.data.component===r.page.component&&(t.data.props=i({},r.page.props,t.data.props));var n=r.normalizeUrl(t.data.url);return e.hash&&!n.hash&&r.urlWithoutHash(e).href===n.href&&(n.hash=e.hash,t.data.url=n.href),r.setPage(t.data,{visitId:U,replace:u,preserveScroll:v,preserveState:m})}).then(function(){return r.fireEvent("success",{detail:{page:r.page}}),W(r.page)}).catch(function(i){if(r.isInertiaResponse(i.response))return r.setPage(i.response.data,{visitId:U});if(t.isCancel(i))T();else if(r.isLocationVisitResponse(i.response)){var o=r.normalizeUrl(i.response.headers["x-inertia-location"]);e.hash&&!o.hash&&r.urlWithoutHash(e).href===o.href&&(o.hash=e.hash),r.locationVisit(o,v)}else{if(!i.response)return Promise.reject(i);r.fireEvent("invalid",{cancelable:!0,detail:{response:i.response}})&&n.show(i.response.data)}}).catch(function(e){if(r.fireEvent("error",{cancelable:!0,detail:{error:e}}))return Promise.reject(e)}).finally(function(){r.fireEvent("finish"),C()}),{get:function(e,t){return["then","catch","finally"].includes(t)&&console.warn("Inertia.js visit promises have been deprecated and will be removed in a future release. Please use the new visit event callbacks instead.\n\nLearn more at https://inertiajs.com/manual-visits#promise-deprecation"),"function"==typeof e[t]?e[t].bind(e):e[t]}})}},setPage:function(e,t){var i=this,n=void 0===t?{}:t,o=n.visitId,r=void 0===o?this.createVisitId():o,s=n.replace,a=void 0!==s&&s,l=n.preserveScroll,c=void 0!==l&&l,h=n.preserveState,d=void 0!==h&&h;return Promise.resolve(this.resolveComponent(e.component)).then(function(t){r===i.visitId&&(e.props=i.transformProps(e.props),e.scrollRegions=e.scrollRegions||[],e.rememberedState=e.rememberedState||{},d="function"==typeof d?d(e):d,c="function"==typeof c?c(e):c,(a=a||i.normalizeUrl(e.url).href===window.location.href)?i.replaceState(e):i.pushState(e),i.swapComponent({component:t,page:e,preserveState:d}).then(function(){c||i.resetScrollPositions(),a||i.fireEvent("navigate",{detail:{page:e}})}))})},pushState:function(e){this.page=e,window.history.pushState(e,"",e.url)},replaceState:function(e){this.page=e,window.history.replaceState(e,"",e.url)},handlePopstateEvent:function(e){var t=this;if(null!==e.state){var n=e.state,o=this.createVisitId();return Promise.resolve(this.resolveComponent(n.component)).then(function(e){o===t.visitId&&(t.page=n,t.swapComponent({component:e,page:n,preserveState:!1}).then(function(){t.restoreScrollPositions(),t.fireEvent("navigate",{detail:{page:n}})}))})}var r=this.normalizeUrl(this.page.url);r.hash=window.location.hash,this.replaceState(i({},this.page,{url:r.href})),this.resetScrollPositions()},get:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,i({},n,{method:"get",data:t}))},reload:function(e){return void 0===e&&(e={}),this.replace(window.location.href,e)},replace:function(e,t){return void 0===t&&(t={}),this.visit(e,i({preserveState:!0},t,{replace:!0}))},post:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,i({preserveState:!0},n,{method:"post",data:t}))},put:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,i({preserveState:!0},n,{method:"put",data:t}))},patch:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,i({preserveState:!0},n,{method:"patch",data:t}))},delete:function(e,t){return void 0===t&&(t={}),this.visit(e,i({preserveState:!0},t,{method:"delete"}))},remember:function(e,t){var n;void 0===t&&(t="default"),this.replaceState(i({},this.page,{rememberedState:i({},this.page.rememberedState,(n={},n[t]=e,n))}))},restore:function(e){var t,i;return void 0===e&&(e="default"),null==(t=window.history.state)||null==(i=t.rememberedState)?void 0:i[e]},fireEvent:function(e,t){return document.dispatchEvent(new CustomEvent("inertia:"+e,t))},on:function(e,t){var i=function(e){var i=t(e);e.cancelable&&!e.defaultPrevented&&!1===i&&e.preventDefault()};return document.addEventListener("inertia:"+e,i),function(){return document.removeEventListener("inertia:"+e,i)}}},exports.shouldIntercept=function(e){return!(e.target&&e.target.isContentEditable||e.defaultPrevented||e.which>1||e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)};
+//# sourceMappingURL=index.js.map
+
 
 /***/ }),
 
@@ -12433,7 +12543,7 @@ var render = function() {
                       },
                       [
                         _c("img", {
-                          staticClass: "rounded-full h-20 w-20 object-cover",
+                          staticClass: "object-cover w-20 h-20 rounded-full",
                           attrs: {
                             src: _vm.user.profile_photo_url,
                             alt: "Current Profile Photo"
@@ -12457,7 +12567,7 @@ var render = function() {
                       },
                       [
                         _c("span", {
-                          staticClass: "block rounded-full w-20 h-20",
+                          staticClass: "block w-20 h-20 rounded-full",
                           style:
                             "background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('" +
                             _vm.photoPreview +
@@ -12522,7 +12632,7 @@ var render = function() {
                 _c("jet-label", { attrs: { for: "name", value: "Name" } }),
                 _vm._v(" "),
                 _c("jet-input", {
-                  staticClass: "mt-1 block w-full",
+                  staticClass: "block mt-1 w-full",
                   attrs: { id: "name", type: "text", autocomplete: "name" },
                   model: {
                     value: _vm.form.name,
@@ -12548,7 +12658,7 @@ var render = function() {
                 _c("jet-label", { attrs: { for: "email", value: "Email" } }),
                 _vm._v(" "),
                 _c("jet-input", {
-                  staticClass: "mt-1 block w-full",
+                  staticClass: "block mt-1 w-full",
                   attrs: { id: "email", type: "email" },
                   model: {
                     value: _vm.form.email,
@@ -28015,67 +28125,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_jetstream__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(laravel_jetstream__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! portal-vue */ "./node_modules/portal-vue/dist/portal-vue.common.js");
 /* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(portal_vue__WEBPACK_IMPORTED_MODULE_3__);
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // require('moment');
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
- // import {InertiaApp} from '@inertiajs/inertia-vue';
 
-
- // import NProgress from 'nprogress'
-// import {Inertia} from '@inertiajs/inertia'
-// import { InertiaProgress } from '@inertiajs/progress'
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
   methods: {
     route: route
   }
 });
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__["plugin"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__["InertiaApp"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(laravel_jetstream__WEBPACK_IMPORTED_MODULE_2__["InertiaForm"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(portal_vue__WEBPACK_IMPORTED_MODULE_3___default.a);
-var el = document.getElementById('app');
+var app = document.getElementById('app');
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   render: function render(h) {
-    return h(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__["App"], {
+    return h(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__["InertiaApp"], {
       props: {
-        initialPage: JSON.parse(el.dataset.page),
+        initialPage: JSON.parse(app.dataset.page),
         resolveComponent: function resolveComponent(name) {
           return __webpack_require__("./resources/js/Pages sync recursive ^\\.\\/.*$")("./".concat(name))["default"];
         }
       }
     });
   }
-}).$mount(el); // InertiaProgress.init()
-// let timeout = null
-//
-// Inertia.on('start', () => {
-//     console.log('start');
-//     timeout = setTimeout(() => NProgress.start(), 250)
-// })
-//
-// Inertia.on('progress', (event) => {
-//     if (NProgress.isStarted() && event.detail.progress.percentage) {
-//         console.log((event.detail.progress.percentage / 100) * 0.9);
-//
-//         NProgress.set((event.detail.progress.percentage / 100) * 0.9)
-//     }
-// })
-//
-// Inertia.on('finish', (event) => {
-//     clearTimeout(timeout);
-//     console.log(event);
-//     if (!NProgress.isStarted()) {
-//         return;
-//     } else if (event.detail.visit.completed) {
-//         NProgress.done();
-//     } else if (event.detail.visit.interrupted) {
-//         NProgress.set(0);
-//     } else if (event.detail.visit.cancelled) {
-//         NProgress.done();
-//         NProgress.remove();
-//     }
-// })
+}).$mount(app);
 
 /***/ }),
 
