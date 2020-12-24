@@ -1,5 +1,4 @@
 <template>
-    <aside>
         <v-card>
             <template #header>
                 Trends for you

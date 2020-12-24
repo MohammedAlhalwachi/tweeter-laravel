@@ -25,5 +25,5 @@ new Vue({
 }).$mount(app);
 
 InertiaProgress.init({
-    showSpinner: false,
+    showSpinner: true,
 });

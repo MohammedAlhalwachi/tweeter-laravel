@@ -1,11 +1,11 @@
 <template>
     <div class="overflow-hidden bg-white shadow sm:rounded-md">
         <div class="p-4 sm:p-6">
-            <header class="font-bold text-gray-700">
+            <header class="font-bold text-gray-700" v-if="hasHeader">
                 <slot name="header"></slot>
-            </header>
 
-            <div class="my-4 -mx-4 sm:-mx-6 border-t-2 border-gray-100"></div>
+                <div class="my-4 -mx-4 sm:-mx-6 border-t-2 border-gray-100"></div>
+            </header>
 
             <slot></slot>
         </div>
@@ -20,6 +20,9 @@
     export default {
         name: "Card",
         computed: {
+            hasHeader() {
+                return !!this.$slots.header;
+            },
             hasActions() {
                 return !!this.$slots.actions;
             }

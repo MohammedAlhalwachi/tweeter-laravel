@@ -1,13 +1,13 @@
 <template>
-    <div class="min-h-screen bg-gray-100 pb-16">
+    <div class="pb-16 min-h-screen bg-gray-100">
         <nav class="bg-white border-b border-gray-200">
             <!-- Primary Navigation Menu -->
             <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <!-- Logo -->
                     <div class="flex flex-shrink-0 items-center">
-                        <inertia-link :href="route('dashboard')">
-                            <jet-application-mark class="block w-auto h-9" />
+                        <inertia-link :href="route('home')">
+                            <jet-application-mark class="block w-8 w-auto text-blue-500" />
                         </inertia-link>
                     </div>
 
@@ -16,10 +16,10 @@
                         <jet-nav-link :href="route('home')" :active="route().current('home')">
                             Home
                         </jet-nav-link>
-                        <jet-nav-link :href="route('explore')" :active="route().current('explore')">
+                        <jet-nav-link :href="route('explore.top')" :active="route().current('explore.*')">
                             Explore
                         </jet-nav-link>
-                        <jet-nav-link :href="route('bookmarks')" :active="route().current('bookmarks')">
+                        <jet-nav-link :href="route('bookmarks.tweets')" :active="route().current('bookmarks.*')">
                             Bookmarks
                         </jet-nav-link>
                     </div>
@@ -50,7 +50,7 @@
                                         Manage Account
                                     </div>
 
-                                    <jet-dropdown-link :href="route('profile.show')">
+                                    <jet-dropdown-link :href="route('profile.show', {username: $page.props.user.email})" :active="route().current('profile.show')">
                                         Profile
                                     </jet-dropdown-link>
 
@@ -141,7 +141,7 @@
                     </div>
 
                     <div class="mt-3 space-y-1">
-                        <jet-responsive-nav-link :href="route('profile.show')" :active="route().current('profile.show')">
+                        <jet-responsive-nav-link :href="route('profile.show', {username: $page.props.user.email || ''})" :active="route().current('profile.show')">
                             Profile
                         </jet-responsive-nav-link>
 
@@ -208,7 +208,7 @@
             <slot></slot>
         </main>
 
-        <footer class="flex fixed inset-x-0 bottom-0 justify-between bg-white sm:hidden border-t border-gray-200 shadow-md">
+        <footer class="flex fixed inset-x-0 bottom-0 justify-between bg-white border-t border-gray-200 shadow-md sm:hidden">
             <footer-nav-link :href="route('home')" :active="route().current('home')">
                 <svg class="inline-block w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                      xmlns="http://www.w3.org/2000/svg">
@@ -216,14 +216,14 @@
                         d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                 </svg>
             </footer-nav-link>
-            <footer-nav-link :href="route('explore')" :active="route().current('explore')">
+            <footer-nav-link :href="route('explore.top')" :active="route().current('explore.*')">
                 <svg class="inline-block" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
                      clip-rule="evenodd">
                     <path
                         d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm1.476 14.955c.988-.405 1.757-1.211 2.116-2.216l2.408-6.739-6.672 2.387c-1.006.36-1.811 1.131-2.216 2.119l-3.065 7.494 7.429-3.045zm-.122-4.286c.551.551.551 1.446 0 1.996-.551.551-1.445.551-1.996 0-.551-.55-.551-1.445 0-1.996.551-.551 1.445-.551 1.996 0z"/>
                     </svg>
             </footer-nav-link>
-            <footer-nav-link :href="route('bookmarks')" :active="route().current('bookmarks')">
+            <footer-nav-link :href="route('bookmarks.tweets')" :active="route().current('bookmarks.*')">
                 <svg class="inline-block w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"></path>
                 </svg>
@@ -245,7 +245,7 @@
     import JetDropdownLink from '@/Jetstream/DropdownLink'
     import JetNavLink from '@/Jetstream/NavLink'
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
-    import FooterNavLink from "@/Layouts/FooterNavLink";
+    import FooterNavLink from "@/Components/FooterNavLink";
     import CurrentUserAvatar from "@/Components/CurrentUserAvatar";
 
     export default {
@@ -272,6 +272,10 @@
                 }, {
                     preserveState: false
                 })
+            },
+            
+            log(val) {
+                console.log(val);
             },
 
             logout() {

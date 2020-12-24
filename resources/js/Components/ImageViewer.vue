@@ -13,7 +13,7 @@
 
                 <img class="object-contain w-full h-full" :key="currentSrcIndex" :src="currentSrc" alt="image">
 
-                <div class="flex absolute inset-y-0 left-0 z-10 items-center sm:left-3">
+                <div class="flex absolute inset-y-0 left-2 z-10 items-center sm:left-3">
                     <transition enter-active-class="duration-200"
                                 enter-class="opacity-0"
                                 enter-to-class="opacity-100"
@@ -25,7 +25,7 @@
                         </button>
                     </transition>
                 </div>
-                <div class="flex absolute inset-y-0 right-0 z-10 items-center sm:right-3">
+                <div class="flex absolute inset-y-0 right-2 z-10 items-center sm:right-3">
                     <transition enter-active-class="duration-200"
                                 enter-class="opacity-0"
                                 enter-to-class="opacity-100"

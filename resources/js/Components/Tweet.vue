@@ -117,7 +117,6 @@
         },
         methods: {
             showImageViewer(index) {
-                console.log(index)
                 this.imageViewerStartIndex = index;
                 this.isImageViewerShown = true  
             },

@@ -4,43 +4,82 @@
             <tweet-form />
             
             <div class="mt-8">
-                <Tweet v-bind="tweet" />
-                <Tweet v-bind="tweet" />
-                <Tweet v-bind="tweet" />
-                <Tweet v-bind="tweet" />
-                <Tweet v-bind="tweet" />
+                <TweetsList :tweets="tweets"/>
             </div>
         </div>
 
-        <sidebar class="hidden md:block w-3/10" />
+        <aside class="hidden md:block w-3/10">
+            <trends-sidebar-section />
+        </aside>
     </div>
 </template>
 
 <script>
     import AppLayout from "@/Layouts/AppLayout";
     import TweetForm from "@/Components/TweetForm";
-    import Sidebar from "@/Components/Sidebar";
-    import Tweet from "@/Pages/Tweet";
+    import TrendsSidebarSection from "@/Components/TrendsSidebarSection";
+    import TweetsList from "@/Components/TweetsList";
 
     export default {
         name: "Home",
-        components: {Tweet, Sidebar, TweetForm, AppLayout},
+        components: {TweetsList, TrendsSidebarSection, TweetForm},
         layout: AppLayout,
         data() {
             return {
-                tweet: {
-                    user: {
-                        name: 'Mohammed Alhalwachi',
+                tweets: [
+                    {
+                        user: {
+                            name: 'Mohammed Alhalwachi',
+                        },
+                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
+                        images: [
+                            `https://picsum.photos/1280/720`,
+                            // `https://picsum.photos/500/500`,
+                            `https://picsum.photos/500/500`,
+                            `https://picsum.photos/450/2860`,
+                        ],
+                        createdAt: '',
                     },
-                    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                    images: [
-                        `https://picsum.photos/1280/720`,
-                        // `https://picsum.photos/500/500`,
-                        `https://picsum.photos/500/500`,
-                        `https://picsum.photos/450/2860`,
-                    ],
-                    createdAt: '',
-                },
+                    {
+                        user: {
+                            name: 'Mohammed Alhalwachi',
+                        },
+                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
+                        images: [
+                            `https://picsum.photos/1280/720`,
+                            // `https://picsum.photos/500/500`,
+                            `https://picsum.photos/500/500`,
+                            `https://picsum.photos/450/2860`,
+                        ],
+                        createdAt: '',
+                    },
+                    {
+                        user: {
+                            name: 'Mohammed Alhalwachi',
+                        },
+                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
+                        images: [
+                            `https://picsum.photos/1280/720`,
+                            // `https://picsum.photos/500/500`,
+                            `https://picsum.photos/500/500`,
+                            `https://picsum.photos/450/2860`,
+                        ],
+                        createdAt: '',
+                    },
+                    {
+                        user: {
+                            name: 'Mohammed Alhalwachi',
+                        },
+                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
+                        images: [
+                            `https://picsum.photos/1280/720`,
+                            // `https://picsum.photos/500/500`,
+                            `https://picsum.photos/500/500`,
+                            `https://picsum.photos/450/2860`,
+                        ],
+                        createdAt: '',
+                    },
+                ],
             }
         },
     }

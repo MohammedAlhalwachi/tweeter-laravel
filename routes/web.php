@@ -18,13 +18,41 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return Inertia\Inertia::render('Home');
     })->name('home');
 
-    Route::get('/explore', function () {
-        return Inertia\Inertia::render('Explore');
-    })->name('explore');
+    Route::prefix('explore')->group(function () {
+        Route::get('/', function () {
+            return Inertia\Inertia::render('Explore');
+        })->name('explore.top');
 
-    Route::get('/bookmarks', function () {
-        return Inertia\Inertia::render('Bookmarks');
-    })->name('bookmarks');
+        Route::get('/latest', function () {
+            return Inertia\Inertia::render('Explore');
+        })->name('explore.latest');
+
+        Route::get('/people', function () {
+            return Inertia\Inertia::render('Explore');
+        })->name('explore.people');
+
+        Route::get('/media', function () {
+            return Inertia\Inertia::render('Explore');
+        })->name('explore.media');
+    });
+
+    Route::prefix('bookmarks')->group(function () {
+        Route::get('/', function () {
+            return Inertia\Inertia::render('Bookmarks');
+        })->name('bookmarks.tweets');
+
+        Route::get('/media', function () {
+            return Inertia\Inertia::render('Bookmarks');
+        })->name('bookmarks.media');
+
+        Route::get('/likes', function () {
+            return Inertia\Inertia::render('Bookmarks');
+        })->name('bookmarks.likes');
+    });
+
+    Route::get('/profile/{username}', function () {
+        return Inertia\Inertia::render('Profile');
+    })->name('account.show');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
