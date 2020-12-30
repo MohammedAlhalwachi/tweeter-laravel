@@ -11,7 +11,7 @@
         "hot": "mix watch --hot",
         "production": "mix --production",
         "prod": "npm run production",
-        "postinstall": "npm run prod"
+        "build": "npm run prod"
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",
