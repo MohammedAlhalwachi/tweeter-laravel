@@ -1,6 +1,6 @@
 <template>
     <div class="pb-16 min-h-screen bg-gray-100">
-        <nav class="bg-white border-b border-gray-200">
+        <nav class="relative z-10 bg-white shadow">
             <!-- Primary Navigation Menu -->
             <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
@@ -12,7 +12,7 @@
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-8 font-bold sm:-my-px sm:ml-10 sm:flex">
+                    <div class="hidden space-x-8 font-bold sm:ml-10 sm:flex">
                         <jet-nav-link :href="route('home')" :active="route().current('home')">
                             Home
                         </jet-nav-link>
@@ -50,8 +50,12 @@
                                         Manage Account
                                     </div>
 
-                                    <jet-dropdown-link :href="route('profile.show', {username: $page.props.user.email})" :active="route().current('profile.show')">
+                                    <jet-dropdown-link :href="route('profile.tweets', {username: $page.props.user.username || ''})" :active="route().current('profile.tweets')">
                                         Profile
+                                    </jet-dropdown-link>
+
+                                    <jet-dropdown-link :href="route('settings.view')" :active="route().current('settings.view')">
+                                        Settings
                                     </jet-dropdown-link>
 
                                     <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
@@ -141,8 +145,12 @@
                     </div>
 
                     <div class="mt-3 space-y-1">
-                        <jet-responsive-nav-link :href="route('profile.show', {username: $page.props.user.email || ''})" :active="route().current('profile.show')">
+                        <jet-responsive-nav-link :href="route('profile.tweets', {username: $page.props.user.username || ''})" :active="route().current('profile.tweets')">
                             Profile
+                        </jet-responsive-nav-link>
+
+                        <jet-responsive-nav-link :href="route('settings.view')" :active="route().current('settings.view')">
+                            Settings
                         </jet-responsive-nav-link>
 
                         <jet-responsive-nav-link :href="route('api-tokens.index')" :active="route().current('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
@@ -205,10 +213,18 @@
 
         <!-- Page Content -->
         <main>
-            <slot></slot>
+            <transition enter-active-class="duration-300 ease-out"
+                        enter-class="opacity-0"
+                        enter-to-class="opacity-100"
+                        leave-active-class="duration-300 ease-out"
+                        leave-class="opacity-100"
+                        leave-to-class="opacity-0"
+                        mode="out-in">
+                <slot></slot>
+            </transition>
         </main>
 
-        <footer class="flex fixed inset-x-0 bottom-0 justify-between bg-white border-t border-gray-200 shadow-md sm:hidden">
+        <footer class="flex fixed inset-x-0 bottom-0 z-30 justify-between bg-white border-t border-gray-200 shadow-md sm:hidden">
             <footer-nav-link :href="route('home')" :active="route().current('home')">
                 <svg class="inline-block w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                      xmlns="http://www.w3.org/2000/svg">
@@ -235,7 +251,7 @@
         </portal-target>
         
         <!-- Image Viewer -->
-        <portal-target name="imageViewer" multiple></portal-target>
+        <portal-target name="imageViewer" class="relative z-50" multiple></portal-target>
     </div>
 </template>
 

@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\FlysystemAdapters\CloudinaryAdapterExtension;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+
+use League\Flysystem\Filesystem;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Storage::extend('cloudinary', function ($app, $config) {
+            $container = new CloudinaryAdapterExtension([
+                'cloud_name' => $config['cloud_name'],
+                'api_key' => $config['api_key'],
+                'api_secret' => $config['api_secret'],
+                'overwrite' => true, // set this to true if you want to overwrite existing files using $filesystem->write();
+            ]);
+
+            return new Filesystem($container);
+        });
     }
 }

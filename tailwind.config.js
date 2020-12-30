@@ -25,11 +25,14 @@ module.exports = {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
         borderRadius: ['responsive', 'hover', 'focus', 'disabled', 'first', 'last'],
         border: ['responsive', 'hover', 'focus', 'disabled', 'last'],
+        ringColor: ['responsive', 'hover', 'focus', 'active'],
+        ringOpacity: ['responsive', 'hover', 'focus', 'active'],
+        ringWidth: ['responsive', 'hover', 'focus', 'active'],
     },
 
     plugins: [
         require('@tailwindcss/forms'),
-        require('@tailwindcss/postcss7-compat'),
         require('@tailwindcss/typography'),
+        require('@tailwindcss/aspect-ratio'),
     ],
 };

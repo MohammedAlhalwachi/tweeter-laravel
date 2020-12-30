@@ -1,6 +1,6 @@
 <template>
     <div class="container flex py-8 mx-auto space-x-2 space-x-4 max-w-7xl sm:p-4">
-        <div class="w-full md:w-7/10">
+        <div class="w-full md:w-3/4">
             <tweet-form />
             
             <div class="mt-8">
@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <aside class="hidden md:block w-3/10">
+        <aside class="hidden md:block w-1/4">
             <trends-sidebar-section />
         </aside>
     </div>
@@ -24,6 +24,11 @@
         name: "Home",
         components: {TweetsList, TrendsSidebarSection, TweetForm},
         layout: AppLayout,
+        metaInfo() {
+            return {
+                title: 'Home - Tweeter',
+            }
+        },
         data() {
             return {
                 tweets: [

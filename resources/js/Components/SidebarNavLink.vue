@@ -1,6 +1,6 @@
 <template>
-    <li class="p-2 py-3 ml-8" :class="classes" :active="active">
-        <inertia-link :href="href">
+    <li>
+        <inertia-link :class="classes" :href="href" class="link block p-2 py-3 pl-8 w-full hover:bg-gray-50" :active="active">
             <slot></slot>
         </inertia-link>
     </li>
@@ -16,14 +16,14 @@
         },
     }
 </script>
-<style scope>
-    li:hover:after {
+<style scoped>
+    .link:hover:after {
         content: '';
-        @apply absolute left-0 block bg-gray-300 w-1.5 h-10 -my-8 rounded-r-md
+        @apply absolute left-0 block bg-gray-300 w-1.5 h-10 -my-8 rounded-r-md;
     }
-    
-    li.active:after {
+
+    .link.active:after {
         content: '';
-        @apply absolute left-0 block bg-blue-500 w-1.5 h-10 -my-8 rounded-r-md
+        @apply absolute left-0 block bg-blue-500 w-1.5 h-10 -my-8 rounded-r-md;
     }
 </style>

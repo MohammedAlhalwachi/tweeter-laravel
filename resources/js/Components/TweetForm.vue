@@ -6,14 +6,32 @@
         
         <div class="flex">
             <current-user-avatar />
-            <textarea name="tweet"
-                      class="flex-1 ml-3 rounded border-0 focus:bg-gray-50 focus:ring-0 focus:border-black"
-                      rows="5" placeholder="What's happening?"></textarea>
+            <div class="pl-3 w-full">
+                <textarea name="tweet"
+                          class="w-full rounded border-0 focus:bg-gray-50 focus:ring-0 focus:border-black"
+                          rows="5" placeholder="What's happening?"
+                          v-model="form.body"
+                ></textarea>
+                <div class="flex flex-row-reverse">
+                    <span class="flex-shrink-0 ml-5 text-xs" :class="bodyWordsCountClasses">{{ form.body.length }} / 280</span>
+                </div>
+                <images-stack :image-sources="imagesPreview" v-if="imagesPreview.length !== 0" />
+                <button class="py-2 px-3 text-sm font-semibold text-gray-500" @click="removeImages" v-if="imagesPreview.length !== 0">Remove images</button>
+                <div>
+                    <p class="ml-3 text-xs text-red-500">{{ form.error('body') }}</p>
+                    <p class="ml-3 text-xs text-red-500">{{ form.error('images') }}</p>
+                    <p class="ml-3 text-xs text-red-500">{{ imagesError }}</p>
+                </div>
+            </div>
         </div>
         
         <template #actions>
             <div class="flex items-center text-blue-500">
-                <button>
+                <button @click="$refs.images.click()">
+                    <input type="file" class="hidden"
+                           ref="images"
+                           @change="updateImagesPreview"
+                           multiple>
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
                 </button>
                 <!--<button class="flex items-center ml-4 text-sm font-semibold tracking-tight">-->
@@ -22,7 +40,7 @@
                 <!--</button>-->
             </div>
 
-            <v-button>Tweet</v-button>
+            <v-button @click.native="postTweet" :disabled="form.processing">Tweet</v-button>
         </template>
     </v-card>
 </template>
@@ -30,9 +48,71 @@
     import CurrentUserAvatar from "@/Components/CurrentUserAvatar"
     import VButton from '@/Components/Button'
     import VCard from '@/Components/Card'
+    import ImagesStack from "@/Components/ImagesStack";
+    import Button from "@/Jetstream/Button";
 
     export default {
         name: 'tweet-form',
-        components: {CurrentUserAvatar, VButton, VCard}
+        components: {Button, ImagesStack, CurrentUserAvatar, VButton, VCard},
+        data() {
+            return {
+                form: this.$inertia.form({
+                    body: '',
+                    images: [],
+                }, {
+                    bag: 'postTweet',
+                }),
+
+                imagesPreview: [],
+                imagesError: '',
+            }
+        },
+        computed: {
+            bodyWordsCountClasses() {
+                if (this.form.body.length === 0)
+                    return 'text-gray-600';
+                else if (this.form.body.length <= 280)
+                    return 'text-green-500';
+                else
+                    return 'text-red-500';
+            }
+        },
+        methods: {
+            postTweet() {
+                this.form.images = this.$refs.images.files.length === 0 ? [] : this.$refs.images.files;
+
+                this.form.post(route('tweets.store'), {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        if (Object.keys(this.$page.props.errors).length === 0) {
+                            this.imagesPreview = [];
+                        }
+                    },
+                });
+            },
+
+            updateImagesPreview() {
+                for (const file of this.$refs.images.files){
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        if (this.imagesPreview.length === 4) {
+                            this.imagesError = 'You may not have more than 4 images.';
+
+                            setTimeout(() => {
+                                this.imagesError = '';
+                            }, 2500);
+                        } else {
+                            this.imagesPreview.push(e.target.result);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            },
+
+            removeImages() {
+                this.$refs.images.value = '';
+                this.imagesPreview = [];
+            }
+        },
     }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Tweet v-for="tweet in tweets" v-bind="tweet"/>
+        <Tweet v-for="tweet in tweets" :key="tweet.id" v-bind="tweet"/>
     </div>
 </template>
 <script>

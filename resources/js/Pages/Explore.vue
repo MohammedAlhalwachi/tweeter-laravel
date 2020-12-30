@@ -1,10 +1,10 @@
 <template>
     <div class="container flex py-8 mx-auto md:space-x-4 max-w-7xl sm:p-4">
-        <aside class="hidden md:block w-3/10">
+        <aside class="hidden md:block w-1/4">
             <tweets-filter-nav :links="filterLinks" />
         </aside>
 
-        <div class="w-full md:w-7/10 space-y-6">
+        <div class="w-full md:w-3/4 space-y-6">
             <div class="flex relative items-center w-full">
                 <label for="search-explore" class="sr-only">Search</label>
                 <div class="flex absolute left-0 items-center ml-4 text-gray-500">
@@ -32,6 +32,11 @@
         name: "Explore",
         components: {VButton, Label, TweetsFilterNav, TweetsList, AppLayout},
         layout: AppLayout,
+        metaInfo() {
+            return {
+                title: 'Explore - Tweeter',
+            }
+        },
         data() {
             return {
                 filterLinks: [

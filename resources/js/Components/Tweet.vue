@@ -3,7 +3,7 @@
         <!-- Header: user info -->
         <header class="font-bold text-gray-700">
             <div class="flex">
-                <user-avatar :src="`https://picsum.photos/300/300`" name="test"/>
+                <user-avatar :src="user.profile_photo_url" name="test"/>
                 <div class="ml-4 text-sm">
                     <inertia-link href="#" class="block">{{ user.name }}</inertia-link>
                     <span class="font-normal text-gray-400">3 minutes ago</span>
@@ -17,9 +17,7 @@
         <!-- Body -->
         <div class="pl-14">
             <p class="max-w-xl">{{ body }}</p>
-            <div class="grid overflow-hidden grid-cols-2 grid-rows-2 gap-1 mt-4 h-64 rounded-2xl border md:h-72">
-                <img v-for="(imageInfo, index) in imagesInfo" :key="imageInfo.src" @click="showImageViewer(index)" class="object-cover w-full h-full" :class="imageInfo.classes" :src="imageInfo.src" alt="image" />
-            </div>
+            <images-stack :image-sources="images.map(image => image.url)" v-if="images.length > 0" />
         </div>
 
         <div class="flex justify-around items-center pl-14 mt-1 text-sm text-gray-400">
@@ -37,94 +35,30 @@
             </button>
         </div>
         
-        <image-viewer :show="isImageViewerShown" :startIndex="imageViewerStartIndex" :sources="images" @close="isImageViewerShown = false"></image-viewer>
     </div>
 </template>
 <script>
     import UserAvatar from "@/Components/UserAvatar"
-    import VCard from "@/Components/Card"
-    import ImageViewer from "@/Components/ImageViewer"
+    import ImagesStack from "@/Components/ImagesStack";
 
     export default {
         name: 'Tweet',
-        components: {ImageViewer, UserAvatar, VCard},
+        components: {ImagesStack, UserAvatar},
         props: ['body', 'user', 'images'],
         data() {
             return {
                 retweets: 65,
                 likes: 0,
                 bookmarks: 5,
-                isImageViewerShown: false,
-                imageViewerStartIndex: 0,
             }
         },
         computed: {
-            imagesInfo() {
-                let imagesTemplates = [
-                    [],
-                    [
-                        {
-                            src: this.images[0],
-                            classes: 'row-span-2 col-span-2'
-                        }
-                    ],
-                    [
-                        {
-                            src: this.images[0],
-                            classes: 'row-span-2'
-                        },
-                        {
-                            src: this.images[1],
-                            classes: 'row-span-2'
-                        }
-                    ],
-                    [
-                        {
-                            src: this.images[0],
-                            classes: 'row-span-2'
-                        },
-                        {
-                            src: this.images[1],
-                            classes: ''
-                        },
-                        {
-                            src: this.images[2],
-                            classes: ''
-                        }
-                    ],
-                    [
-                        {
-                            src: this.images[0],
-                            classes: ''
-                        },
-                        {
-                            src: this.images[1],
-                            classes: ''
-                        },
-                        {
-                            src: this.images[2],
-                            classes: ''
-                        },
-                        {
-                            src: this.images[3],
-                            classes: ''
-                        }
-                    ],
-                ];
-
-                return imagesTemplates[this.images.length];
-            }
         },
         methods: {
-            showImageViewer(index) {
-                this.imageViewerStartIndex = index;
-                this.isImageViewerShown = true  
-            },
+            
             log(str) {
                 console.log(str);
             },
         },
     }
 </script>
-<style scoped>
-</style>

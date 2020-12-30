@@ -1,10 +1,10 @@
 <template>
     <div class="container flex py-8 mx-auto md:space-x-4 max-w-7xl sm:p-4">
-        <aside class="hidden md:block w-3/10">
+        <aside class="hidden md:block w-1/4">
             <tweets-filter-nav :links="filterLinks" />
         </aside>
 
-        <div class="w-full md:w-7/10 space-y-6 md:space-y-0">
+        <div class="w-full md:w-3/4 space-y-6 md:space-y-0">
             <tweets-filter-nav class="md:hidden" :links="filterLinks" />
 
             <TweetsList :tweets="tweets" />
@@ -23,6 +23,11 @@
         name: "Bookmarks",
         components: {VButton, Label, TweetsFilterNav, TweetsList, AppLayout},
         layout: AppLayout,
+        metaInfo() {
+            return {
+                title: 'Bookmarks - Tweeter',
+            }
+        },
         data() {
             return {
                 filterLinks: [

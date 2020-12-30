@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TweetsController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,11 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/', function () {
         return Inertia\Inertia::render('Home');
     })->name('home');
-
+    
+    // Explore 
     Route::prefix('explore')->group(function () {
         Route::get('/', function () {
             return Inertia\Inertia::render('Explore');
@@ -36,6 +40,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         })->name('explore.media');
     });
 
+    // Bookmarks 
     Route::prefix('bookmarks')->group(function () {
         Route::get('/', function () {
             return Inertia\Inertia::render('Bookmarks');
@@ -50,9 +55,25 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         })->name('bookmarks.likes');
     });
 
-    Route::get('/profile/{username}', function () {
-        return Inertia\Inertia::render('Profile');
-    })->name('account.show');
+    // User Profile 
+    Route::prefix('/profiles/{username}')->group(function () {
+        Route::get('/', function ($username) {
+            return Inertia\Inertia::render('Profile', [
+                'timeline' => User::where('username', $username)->first()->timeline()->orderBy('id', 'desc')->get(),
+            ]);
+        })->name('profile.tweets');
+
+        Route::get('/media', function () {
+            return Inertia\Inertia::render('Profile');
+        })->name('profile.media');
+
+        Route::get('/likes', function () {
+            return Inertia\Inertia::render('Profile');
+        })->name('profile.likes');
+    });
+
+    // Tweet 
+    Route::post('/tweets', [TweetsController::class, 'store'])->name('tweets.store');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

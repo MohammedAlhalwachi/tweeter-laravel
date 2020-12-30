@@ -5,12 +5,15 @@ import Vue from 'vue';
 import { App, plugin } from '@inertiajs/inertia-vue';
 import { InertiaForm } from 'laravel-jetstream';
 import PortalVue from 'portal-vue';
-import { InertiaProgress } from '@inertiajs/progress'
+import { InertiaProgress } from '@inertiajs/progress';
+import VueMeta from 'vue-meta';
 
 Vue.mixin({ methods: { route } });
 Vue.use(plugin);
 Vue.use(InertiaForm);
 Vue.use(PortalVue);
+
+Vue.use(VueMeta);
 
 const app = document.getElementById('app');
 
@@ -19,7 +22,7 @@ new Vue({
         h(App, {
             props: {
                 initialPage: JSON.parse(app.dataset.page),
-                resolveComponent: (name) => require(`./Pages/${name}`).default,
+                resolveComponent: name => import(`@/Pages/${name}`).then(module => module.default),
             },
         }),
 }).$mount(app);
