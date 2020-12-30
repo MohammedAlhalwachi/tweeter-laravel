@@ -21,7 +21,7 @@
         "laravel/tinker": "^2.5",
         "league/flysystem-aws-s3-v3": "~1.0",
         "tightenco/ziggy": "^0.9.4",
-        "ext-gd": "*"
+        "gd": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
