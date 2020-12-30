@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01d3649b-e37f-42d9-a442-74baf6dac69a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/TrustProxies.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/TrustProxies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,7 +278,7 @@
       <workItem from="1609170045073" duration="15887000" />
       <workItem from="1609200339283" duration="2263000" />
       <workItem from="1609266988182" duration="11715000" />
-      <workItem from="1609322026472" duration="8318000" />
+      <workItem from="1609322026472" duration="8822000" />
     </task>
     <task id="LOCAL-00001" summary="test upgrading">
       <created>1608753330284</created>
@@ -298,7 +301,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609331055050</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add .idea to .gitignore">
+      <created>1609331143722</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1609331143722</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,7 +344,8 @@
     <MESSAGE value="test upgrading" />
     <MESSAGE value="revert @inertiajs/inertia to 0.7.0 and @inertiajs/inertia-vue to 0.4.2 since it is not compatible with laravel-jetstream" />
     <MESSAGE value="last" />
-    <option name="LAST_COMMIT_MESSAGE" value="last" />
+    <MESSAGE value="add .idea to .gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="add .idea to .gitignore" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
