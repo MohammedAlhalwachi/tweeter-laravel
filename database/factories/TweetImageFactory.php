@@ -23,12 +23,25 @@ class TweetImageFactory extends Factory
      */
     public function definition()
     {
-        $image = fopen('https://picsum.photos/1280/720.jpg', 'r');
-        $path = 'tweet-images/' . Str::random(40). '.jpg';
+        $image = $this->getRandomImageStream();
+        $path = 'tweet-images/' . Str::random(40) . '.jpg';
         Storage::put($path, $image);
-        
+
         return [
-            'path' => $path, 
+            'path' => $path,
         ];
+    }
+
+    private function getRandomImageStream()
+    {
+        //$imageStream = fopen('https://picsum.photos/1280/720.jpg', 'r');
+        
+        $folderPath = Storage::disk('local')->path('testing/tweet-images/');
+        $images = glob($folderPath . '*.{jpg,jpeg,png}', GLOB_BRACE);
+
+        $randImagePath = $images[array_rand($images)];
+        $imageStream = fopen($randImagePath, 'r');
+
+        return $imageStream;
     }
 }

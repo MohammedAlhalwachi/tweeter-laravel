@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use App\Traits\HasProfileBanner;
@@ -19,6 +21,7 @@ class User extends Authenticatable
     use HasProfileBanner;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -51,6 +54,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_followed' => 'boolean',
     ];
 
     /**
@@ -70,8 +74,32 @@ class User extends Authenticatable
     function tweets() {
         return $this->hasMany(Tweet::class);
     }
+
+    function followings() {
+        return $this->belongsToMany(User::class, 'follower_followee', 'follower_id', 'followee_id');
+    }
     
-    function timeline() {
-        return $this->tweets()->with('user', 'images');
+    function follow(User $user){
+        $this->followings()->syncWithoutDetaching([$user->id]);
+    }
+    function unfollow(User $user){
+        $this->followings()->detach($user->id);
+    }
+    
+    function getIsFollowedAttribute(){
+        return $this->followers()->where('follower_id', Auth::user()->id)->exists();
+    }
+
+    function followers() {
+        return $this->belongsToMany(User::class, 'follower_followee', 'followee_id', 'follower_id');
+    }
+    
+    function ownTimeline() {
+        return $this->tweets()->with('user', 'images')->orderBy('id', 'desc');
+    }
+    
+    function homeTimeline() {
+        //TODO:: add own timeline with the results. Use raw SQL.
+        return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->orderBy('id', 'desc');
     }
 }

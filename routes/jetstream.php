@@ -16,7 +16,7 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
     Route::group(['middleware' => ['auth', 'verified']], function () {
         // User & Profile...
         Route::get('/settings', [UserProfileController::class, 'show'])
-                    ->name('settings.view');
+                    ->name('settings.show');
 
         Route::delete('/user/other-browser-sessions', [OtherBrowserSessionsController::class, 'destroy'])
                     ->name('other-browser-sessions.destroy');

@@ -21,7 +21,7 @@ class OptimizeImages
             })
             ->each(function (UploadedFile $file) {
                 $img = Image::make($file)->widen(1000);
-                $img->save($file->getPathname(), 80, $file->getClientOriginalExtension());
+                $img->save($file->getPathname(), 70, $file->getClientOriginalExtension());
             });
 
         return $next($request);

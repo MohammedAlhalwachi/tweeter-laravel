@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Tweet;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -28,7 +30,7 @@ class UserFactory extends Factory
         Storage::put($profileImagePath, $profileImage);
 
         $profileBanner = fopen('https://picsum.photos/1280/720.jpg', 'r');
-        $profileBannerPath = 'tweet-images/' . Str::random(40). '.jpg';
+        $profileBannerPath = 'profile-banner/' . Str::random(40). '.jpg';
         Storage::put($profileBannerPath, $profileBanner);
         
         return [
@@ -39,8 +41,20 @@ class UserFactory extends Factory
             'profile_photo_path' => $profileImagePath,
             'profile_banner_path' => $profileBannerPath,
             'email_verified_at' => now(),
+            //'password' => function (array $attributes) {
+            //    return Hash::make($attributes['email']);
+            //},
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            $tweets = Tweet::factory()->count(5)->create([
+                'user_id' => $user->id,
+            ]);
+        });
     }
 }

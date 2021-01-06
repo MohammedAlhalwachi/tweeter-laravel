@@ -9,21 +9,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 use Intervention\Image\Facades\Image;
 
-class TweetsController extends Controller
+class TweetController extends Controller
 {
     function store(Request $request) {
-        //ddd($request->images);
-        //
+        $user = Auth::user();
+        
         Validator::make($request->all(), [
             'body' => ['required', 'max:280'],
             'images' => ['array', 'max:4'],
             'images.*' => ['image', 'max:6000'],
         ])->validateWithBag('postTweet');
 
-        DB::transaction(function() use ($request) {
-            $tweet = Auth::user()->tweets()->create([
+        DB::transaction(function() use ($request, $user) {
+            $tweet = $user->tweets()->create([
                 'body' => $request->body,
             ]);
             
@@ -35,6 +36,6 @@ class TweetsController extends Controller
             }
         });
 
-        return back();
+        return redirect()->route('profile.show', ['username' => $user->username]);
     }
 }

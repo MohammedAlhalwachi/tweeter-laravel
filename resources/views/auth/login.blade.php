@@ -12,17 +12,17 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login') }}">
+        <form  x-data="{ email: '{{ old('email') }}', password: '' }" @submit-form="email = $event.detail.email; password = $event.detail.password; console.log($refs.emailInput.value); console.log(password); $el.submit();" method="POST" action="{{ route('login') }}">
             @csrf
 
             <div>
                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" x-ref="emailInput" x-value="email" required autofocus />
             </div>
 
             <div class="mt-4">
                 <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                <x-jet-input id="password" class="block mt-1 w-full" type="password" x-model="password" name="password" required autocomplete="current-password" />
             </div>
 
             <div class="block mt-4">
@@ -30,6 +30,23 @@
                     <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
                     <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
+            </div>
+            
+            <div class="mt-4" x-data="{ demoAccounts: [{ email: 'jeffrey34@example.net', password: 'password' }, { email: 'lourdes65@example.org', password: 'password' }, { email: 'ilegros@example.org', password: 'password' }] }">
+{{--                <p class="block font-bold text-md text-gray-700 my-4">Or</p>--}}
+                <p class="block font-medium text-sm text-gray-700">Login as</p>
+                
+                <div class="flex space-x-2">
+                    <x-jet-secondary-button class="block mt-1" @click="$dispatch('submit-form', demoAccounts[0])">
+                        {{ __('Guest 1') }}
+                    </x-jet-secondary-button>
+                    <x-jet-secondary-button class="block mt-1" @click="$dispatch('submit-form', demoAccounts[1])">
+                        {{ __('Guest 2') }}
+                    </x-jet-secondary-button>
+                    <x-jet-secondary-button class="block mt-1" @click="$dispatch('submit-form', demoAccounts[2])">
+                        {{ __('Guest 3') }}
+                    </x-jet-secondary-button>
+                </div>
             </div>
 
             <div class="flex items-center justify-end mt-4">

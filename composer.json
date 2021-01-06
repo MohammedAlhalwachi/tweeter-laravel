@@ -18,13 +18,15 @@
         "inertiajs/inertia-laravel": "^0.2.4",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.12",
-        "laravel/jetstream": "^1.6",
+        "laravel/jetstream": "^2.0",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "league/flysystem-aws-s3-v3": "~1.0",
-        "tightenco/ziggy": "^0.9.4"
+        "staudenmeir/eloquent-has-many-deep": "^1.13",
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0",

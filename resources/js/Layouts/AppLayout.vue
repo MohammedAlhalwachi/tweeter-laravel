@@ -22,6 +22,11 @@
                         <jet-nav-link :href="route('bookmarks.tweets')" :active="route().current('bookmarks.*')">
                             Bookmarks
                         </jet-nav-link>
+
+                        <!-- FIXME:: Remove this. Only for testing -->
+                        <jet-nav-link :href="route('profile.show', {username: 'malhalwachi' })" :active="false">
+                            Test malhalwachi
+                        </jet-nav-link>
                     </div>
 
                     <!-- Settings Dropdown -->
@@ -50,11 +55,11 @@
                                         Manage Account
                                     </div>
 
-                                    <jet-dropdown-link :href="route('profile.tweets', {username: $page.props.user.username || ''})" :active="route().current('profile.tweets')">
+                                    <jet-dropdown-link :href="route('profile.show', {username: $page.props.user.username || ''})" :active="route().current('profile.show')">
                                         Profile
                                     </jet-dropdown-link>
 
-                                    <jet-dropdown-link :href="route('settings.view')" :active="route().current('settings.view')">
+                                    <jet-dropdown-link :href="route('settings.show')" :active="route().current('settings.show')">
                                         Settings
                                     </jet-dropdown-link>
 
@@ -145,11 +150,11 @@
                     </div>
 
                     <div class="mt-3 space-y-1">
-                        <jet-responsive-nav-link :href="route('profile.tweets', {username: $page.props.user.username || ''})" :active="route().current('profile.tweets')">
+                        <jet-responsive-nav-link :href="route('profile.show', {username: $page.props.user.username || ''})" :active="route().current('profile.show')">
                             Profile
                         </jet-responsive-nav-link>
 
-                        <jet-responsive-nav-link :href="route('settings.view')" :active="route().current('settings.view')">
+                        <jet-responsive-nav-link :href="route('settings.show')" :active="route().current('settings.show')">
                             Settings
                         </jet-responsive-nav-link>
 
@@ -295,7 +300,7 @@
             },
 
             logout() {
-                axios.post(route('logout').url()).then(response => {
+                axios.post(route('logout')).then(response => {
                     window.location = '/';
                 })
             },

@@ -4,11 +4,20 @@
             <tweet-form />
             
             <div class="mt-8">
-                <TweetsList :tweets="tweets"/>
+                <TweetsList :tweets="timeline"  v-if="timeline.length > 0"/>
+                <div class="flex flex flex-col justify-center items-center text-2xl font-semibold text-center text-gray-800 mt-24" v-else>
+                    <span class="text-6xl">😃</span>
+                    <span class="mt-8 text-3xl">Welcome</span>
+                    <p class="text-xl font-medium mt-8">
+                        No tweets yet!
+                        <br>
+                        Try following new people
+                    </p>
+                </div>
             </div>
         </div>
 
-        <aside class="hidden md:block w-1/4">
+        <aside class="hidden w-1/4 md:block">
             <trends-sidebar-section />
         </aside>
     </div>
@@ -24,6 +33,7 @@
         name: "Home",
         components: {TweetsList, TrendsSidebarSection, TweetForm},
         layout: AppLayout,
+        props: ['timeline'],
         metaInfo() {
             return {
                 title: 'Home - Tweeter',
@@ -31,60 +41,6 @@
         },
         data() {
             return {
-                tweets: [
-                    {
-                        user: {
-                            name: 'Mohammed Alhalwachi',
-                        },
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                        images: [
-                            `https://picsum.photos/1280/720`,
-                            // `https://picsum.photos/500/500`,
-                            `https://picsum.photos/500/500`,
-                            `https://picsum.photos/450/2860`,
-                        ],
-                        createdAt: '',
-                    },
-                    {
-                        user: {
-                            name: 'Mohammed Alhalwachi',
-                        },
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                        images: [
-                            `https://picsum.photos/1280/720`,
-                            // `https://picsum.photos/500/500`,
-                            `https://picsum.photos/500/500`,
-                            `https://picsum.photos/450/2860`,
-                        ],
-                        createdAt: '',
-                    },
-                    {
-                        user: {
-                            name: 'Mohammed Alhalwachi',
-                        },
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                        images: [
-                            `https://picsum.photos/1280/720`,
-                            // `https://picsum.photos/500/500`,
-                            `https://picsum.photos/500/500`,
-                            `https://picsum.photos/450/2860`,
-                        ],
-                        createdAt: '',
-                    },
-                    {
-                        user: {
-                            name: 'Mohammed Alhalwachi',
-                        },
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                        images: [
-                            `https://picsum.photos/1280/720`,
-                            // `https://picsum.photos/500/500`,
-                            `https://picsum.photos/500/500`,
-                            `https://picsum.photos/450/2860`,
-                        ],
-                        createdAt: '',
-                    },
-                ],
             }
         },
     }

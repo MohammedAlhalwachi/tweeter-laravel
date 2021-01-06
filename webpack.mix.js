@@ -18,4 +18,5 @@ mix.js('resources/js/app.js', 'public/js').vue()
         require('autoprefixer'),
     ])
     .webpackConfig(require('./webpack.config'))
+    .version()
     .disableNotifications();

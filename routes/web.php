@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\TweetsController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileFollowingController;
+use App\Http\Controllers\TweetController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/', function () {
-        return Inertia\Inertia::render('Home');
-    })->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     
     // Explore 
     Route::prefix('explore')->group(function () {
@@ -56,24 +57,17 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     // User Profile 
-    Route::prefix('/profiles/{username}')->group(function () {
-        Route::get('/', function ($username) {
-            return Inertia\Inertia::render('Profile', [
-                'timeline' => User::where('username', $username)->first()->timeline()->orderBy('id', 'desc')->get(),
-            ]);
-        })->name('profile.tweets');
+    Route::get('/profiles/{username}/{filter?}', [ProfileController::class, 'show'])
+        ->name('profile.show')
+        ->where(['filter' => '(media|likes)']);
 
-        Route::get('/media', function () {
-            return Inertia\Inertia::render('Profile');
-        })->name('profile.media');
-
-        Route::get('/likes', function () {
-            return Inertia\Inertia::render('Profile');
-        })->name('profile.likes');
-    });
+    Route::post('/profiles/{id}/followings', [ProfileFollowingController::class, 'store'])
+        ->name('profile.followings.store');
+    Route::delete('/profiles/{id}/followings', [ProfileFollowingController::class, 'destroy'])
+        ->name('profile.followings.destroy');
 
     // Tweet 
-    Route::post('/tweets', [TweetsController::class, 'store'])->name('tweets.store');
+    Route::post('/tweets', [TweetController::class, 'store'])->name('tweets.store');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
