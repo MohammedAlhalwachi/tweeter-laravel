@@ -1,6 +1,6 @@
 <template>
     <li>
-        <inertia-link :class="classes" :href="href" class="link block p-2 py-3 pl-8 w-full hover:bg-gray-50" :active="active">
+        <inertia-link :class="classes" :href="href" class="link block p-2 py-3 pl-8 w-full hover:bg-gray-50" :active="active" :replace="true">
             <slot></slot>
         </inertia-link>
     </li>
