@@ -116,6 +116,7 @@
             setDemoAccount(index) {
                 this.form.email = this.demoAccounts[index].email;
                 this.form.password = this.demoAccounts[index].password;
+                this.submit();
             },
         },
         mounted() {
