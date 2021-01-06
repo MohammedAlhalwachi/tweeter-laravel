@@ -36,7 +36,7 @@ class TweetImageFactory extends Factory
     {
         //$imageStream = fopen('https://picsum.photos/1280/720.jpg', 'r');
         
-        $folderPath = Storage::disk('local')->path('testing/tweet-images/');
+        $folderPath = Storage::disk('local')->path('testing/images/');
         $images = glob($folderPath . '*.{jpg,jpeg,png}', GLOB_BRACE);
 
         $randImagePath = $images[array_rand($images)];
