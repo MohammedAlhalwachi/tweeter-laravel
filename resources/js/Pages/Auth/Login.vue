@@ -35,13 +35,13 @@
 
                 <div class="flex space-x-2">
                     <jet-secondary-button class="block mt-1" @click.native="setDemoAccount(0)">
-                        Guest 1
+                        Demo 1
                     </jet-secondary-button>
                     <jet-secondary-button class="block mt-1" @click.native="setDemoAccount(1)">
-                        Guest 2
+                        Demo 2
                     </jet-secondary-button>
                     <jet-secondary-button class="block mt-1" @click.native="setDemoAccount(2)">
-                        Guest 3
+                        Demo 3
                     </jet-secondary-button>
                 </div>
             </div>
@@ -119,8 +119,5 @@
                 this.submit();
             },
         },
-        mounted() {
-            console.log('sdlksdlkj');
-        }
     }
 </script>
