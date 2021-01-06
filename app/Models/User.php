@@ -93,13 +93,24 @@ class User extends Authenticatable
     function followers() {
         return $this->belongsToMany(User::class, 'follower_followee', 'followee_id', 'follower_id');
     }
+
+    function likes() {
+        return $this->belongsToMany(Tweet::class, 'user_tweet_likes');
+    }
+
+    function like(Tweet $tweet) {
+        $this->likes()->syncWithoutDetaching([$tweet->id]);
+    }
+    function unlike(Tweet $tweet) {
+        $this->likes()->detach($tweet->id);
+    }
     
     function ownTimeline() {
-        return $this->tweets()->with('user', 'images')->orderBy('created_at', 'desc');
+        return $this->tweets()->with('user', 'images')->withCount(['likes'])->orderBy('created_at', 'desc');
     }
     
     function homeTimeline() {
         //TODO:: add own timeline with the results. Use raw SQL.
-        return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->orderBy('created_at', 'desc');
+        return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->withCount(['likes'])->orderBy('created_at', 'desc');
     }
 }

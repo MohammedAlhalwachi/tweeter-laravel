@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileFollowingController;
 use App\Http\Controllers\TweetController;
+use App\Http\Controllers\TweetLikeController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -68,6 +69,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Tweet 
     Route::post('/tweets', [TweetController::class, 'store'])->name('tweets.store');
+    Route::post('/tweets/{id}/likes', [TweetLikeController::class, 'store'])->name('tweets.likes.store');
+    Route::delete('/tweets/{id}/likes', [TweetLikeController::class, 'destroy'])->name('tweets.likes.destroy');
 });
 
 //Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

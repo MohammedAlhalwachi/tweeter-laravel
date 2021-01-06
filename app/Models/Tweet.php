@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Tweet extends Model
 {
@@ -25,14 +26,18 @@ class Tweet extends Model
      *
      * @var array
      */
-    protected $casts = [];
+    protected $casts = [
+        'is_liked' => 'boolean'
+    ];
 
     /**
      * The accessors to append to the model's array form.
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'is_liked'
+    ];
 
     function user() {
         return $this->belongsTo(User::class);
@@ -40,5 +45,13 @@ class Tweet extends Model
     
     function images() {
         return $this->hasMany(TweetImage::class);
+    }
+
+    function likes() {
+        return $this->belongsToMany(User::class, 'user_tweet_likes');
+    }
+
+    function getIsLikedAttribute(){
+        return $this->likes()->where('user_id', Auth::user()->id)->exists();
     }
 }
