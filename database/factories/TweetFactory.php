@@ -22,8 +22,11 @@ class TweetFactory extends Factory
      */
     public function definition()
     {
+        $date = now()->subDays(random_int(0, 5))->subHours(random_int(0, 24));
+        
         return [
             'body' => $this->faker->text(280),
+            'created_at' => $date,
         ];
     }
 

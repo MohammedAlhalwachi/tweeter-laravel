@@ -48,25 +48,10 @@ class DatabaseSeeder extends Seeder
                 ]),
         ];
 
-        $myAccount = User::factory()
-            ->create([
-                'name' => 'Mohammed Alhalwachi',
-                'username' => 'malhalwachi',
-                'email' => 'alhalwachi@gmail.com',
-                'password' => Hash::make('alhalwachi@gmail.com'),
-            ]);
-
-        $myAccount = User::factory()
-            ->create([
-                'name' => 'Mohammed Alhalwachi',
-                'username' => 'malhalwachi',
-                'email' => 'alhalwachi@gmail.com',
-                'password' => Hash::make('alhalwachi@gmail.com'),
-            ]);
-
         $users = User::factory()
             ->count(80)
             ->create()
+            ->merge($demoAccounts)
             ->push($myAccount);
 
         foreach ($users as $user) {

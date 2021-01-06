@@ -6,7 +6,7 @@
                 <user-avatar :src="user.profile_photo_url" name="test"/>
                 <div class="ml-4 text-sm">
                     <inertia-link href="#" class="block">{{ user.name }}</inertia-link>
-                    <span class="font-normal text-gray-400">3 minutes ago</span>
+                    <span class="font-normal text-gray-400">{{ dayjs(created_at).fromNow() }}</span>
                 </div>
             </div>
         </header>
@@ -38,13 +38,17 @@
     </div>
 </template>
 <script>
-    import UserAvatar from "@/Components/UserAvatar"
+    import * as dayjs from 'dayjs';
+    import relativeTime from 'dayjs/plugin/relativeTime';
+    dayjs.extend(relativeTime);
+
+    import UserAvatar from "@/Components/UserAvatar";
     import ImagesStack from "@/Components/ImagesStack";
 
     export default {
         name: 'Tweet',
         components: {ImagesStack, UserAvatar},
-        props: ['body', 'user', 'images'],
+        props: ['body', 'user', 'images', 'created_at'],
         data() {
             return {
                 retweets: 65,
@@ -55,7 +59,7 @@
         computed: {
         },
         methods: {
-            
+            dayjs: dayjs,
             log(str) {
                 console.log(str);
             },

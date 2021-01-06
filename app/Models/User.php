@@ -95,11 +95,11 @@ class User extends Authenticatable
     }
     
     function ownTimeline() {
-        return $this->tweets()->with('user', 'images')->orderBy('id', 'desc');
+        return $this->tweets()->with('user', 'images')->orderBy('created_at', 'desc');
     }
     
     function homeTimeline() {
         //TODO:: add own timeline with the results. Use raw SQL.
-        return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->orderBy('id', 'desc');
+        return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->orderBy('created_at', 'desc');
     }
 }
