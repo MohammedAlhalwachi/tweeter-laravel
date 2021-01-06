@@ -18,8 +18,8 @@
                 <images-stack :image-sources="imagesPreview" v-if="imagesPreview.length !== 0" />
                 <button class="py-2 px-3 text-sm font-semibold text-gray-500" @click="removeImages" v-if="imagesPreview.length !== 0">Remove images</button>
                 <div>
-                    <p class="ml-3 text-xs text-red-500">{{ form.error('body') }}</p>
-                    <p class="ml-3 text-xs text-red-500">{{ form.error('images') }}</p>
+                    <p class="ml-3 text-xs text-red-500">{{ form.errors.body }}</p>
+                    <p class="ml-3 text-xs text-red-500">{{ form.errors.images }}</p>
                     <p class="ml-3 text-xs text-red-500">{{ imagesError }}</p>
                 </div>
             </div>
@@ -59,8 +59,9 @@
                 form: this.$inertia.form({
                     body: '',
                     images: [],
-                }, {
-                    bag: 'postTweet',
+                    // errorBag: 'postTweet'
+                // }, {
+                //     bag: 'postTweet',
                 }),
 
                 imagesPreview: [],

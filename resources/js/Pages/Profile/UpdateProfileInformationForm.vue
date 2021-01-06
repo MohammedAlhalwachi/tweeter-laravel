@@ -38,7 +38,7 @@
                     Remove Photo
                 </jet-secondary-button>
 
-                <jet-input-error :message="form.error('photo')" class="mt-2" />
+                <jet-input-error :message="form.errors.photo" class="mt-2" />
             </div>
 
             <!-- Profile Banner -->
@@ -70,35 +70,35 @@
                     Remove Banner
                 </jet-secondary-button>
 
-                <jet-input-error :message="form.error('banner')" class="mt-2" />
+                <jet-input-error :message="form.errors.banner" class="mt-2" />
             </div>
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="name" value="Name" />
                 <jet-input id="name" type="text" class="block mt-1 w-full" v-model="form.name" autocomplete="name" />
-                <jet-input-error :message="form.error('name')" class="mt-2" />
+                <jet-input-error :message="form.errors.name" class="mt-2" />
             </div>
 
             <!-- Description -->
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="description" value="Description" />
                 <textarea id="description" type="text" class="form-input rounded-md shadow-sm block mt-1 w-full" rows="4" v-model="form.description"></textarea>
-                <jet-input-error :message="form.error('description')" class="mt-2" />
+                <jet-input-error :message="form.errors.description" class="mt-2" />
             </div>
 
             <!-- Username -->
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="username" value="Username" />
                 <jet-input id="username" type="text" class="block mt-1 w-full" v-model="form.username" />
-                <jet-input-error :message="form.error('username')" class="mt-2" />
+                <jet-input-error :message="form.errors.username" class="mt-2" />
             </div>
 
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="email" value="Email" />
                 <jet-input id="email" type="email" class="block mt-1 w-full" v-model="form.email" autocomplete="email" />
-                <jet-input-error :message="form.error('email')" class="mt-2" />
+                <jet-input-error :message="form.errors.email" class="mt-2" />
             </div>
         </template>
 

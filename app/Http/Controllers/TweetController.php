@@ -21,7 +21,7 @@ class TweetController extends Controller
             'body' => ['required', 'max:280'],
             'images' => ['array', 'max:4'],
             'images.*' => ['image', 'max:6000'],
-        ])->validateWithBag('postTweet');
+        ])->validate();
 
         DB::transaction(function() use ($request, $user) {
             $tweet = $user->tweets()->create([

@@ -3,14 +3,14 @@ require('./bootstrap');
 import Vue from 'vue';
 
 import { App, plugin } from '@inertiajs/inertia-vue';
-import { InertiaForm } from 'laravel-jetstream';
+// import { InertiaForm } from 'laravel-jetstream';
 import PortalVue from 'portal-vue';
 import { InertiaProgress } from '@inertiajs/progress';
 import VueMeta from 'vue-meta';
 
 Vue.mixin({ methods: { route } });
 Vue.use(plugin);
-Vue.use(InertiaForm);
+// Vue.use(InertiaForm);
 Vue.use(PortalVue);
 
 Vue.use(VueMeta);
