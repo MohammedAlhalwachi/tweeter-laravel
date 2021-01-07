@@ -85,7 +85,7 @@ class User extends Authenticatable
     function unfollow(User $user){
         $this->followings()->detach($user->id);
     }
-    
+
     function getIsFollowedAttribute(){
         return $this->followers()->where('follower_id', Auth::user()->id)->exists();
     }
@@ -110,7 +110,16 @@ class User extends Authenticatable
     }
     
     function homeTimeline() {
-        //TODO:: add own timeline with the results. Use raw SQL.
-        return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->withCount(['likes'])->orderBy('created_at', 'desc');
+        return Tweet::where('user_id', '=', Auth::user()->id)
+            ->orWhereIn('user_id', function ($query) {
+                $query->selectRaw('followee_id')
+                    ->from('follower_followee')
+                    ->where('follower_followee.follower_id', '=', Auth::user()->id);
+            })
+            ->with('user', 'images')
+            ->withIsLiked()
+            ->withCount(['likes'])
+            ->orderBy('created_at', 'desc');
+        //return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->withCount(['likes'])->orderBy('created_at', 'desc');
     }
 }

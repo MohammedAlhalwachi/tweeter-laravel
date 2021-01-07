@@ -36,6 +36,6 @@ class TweetController extends Controller
             }
         });
 
-        return redirect()->route('profile.show', ['username' => $user->username]);
+        return back();
     }
 }

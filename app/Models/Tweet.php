@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Tweet extends Model
 {
@@ -36,7 +37,7 @@ class Tweet extends Model
      * @var array
      */
     protected $appends = [
-        'is_liked'
+        //'is_liked'
     ];
 
     function user() {
@@ -51,7 +52,15 @@ class Tweet extends Model
         return $this->belongsToMany(User::class, 'user_tweet_likes');
     }
 
-    function getIsLikedAttribute(){
-        return $this->likes()->where('user_id', Auth::user()->id)->exists();
+    function scopeWithIsLiked($query) {
+        return $query->addSelect([
+            'is_liked' => function($query) {
+                return $query
+                    ->from('user_tweet_likes')
+                    ->where('user_tweet_likes.user_id', '=', Auth::user()->id)
+                    ->where('user_tweet_likes.tweet_id', '=', DB::raw('tweets.id'))
+                    ->select(DB::raw('COUNT(1)'));
+            }
+        ]);
     }
 }
