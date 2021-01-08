@@ -104,27 +104,40 @@ class User extends Authenticatable
     function unlike(Tweet $tweet) {
         $this->likes()->detach($tweet->id);
     }
+
+    function retweets() {
+        return $this->belongsToMany(Tweet::class, 'user_tweet_retweets')->withTimestamps();
+    }
+    
+    function retweet(Tweet $tweet) {
+        $this->retweets()->syncWithoutDetaching([$tweet->id]);
+    }
+    function unretweet(Tweet $tweet) {
+        $this->retweets()->detach($tweet->id);
+    }
     
     function ownTimeline() {
         return $this->tweets()
             ->with('user', 'images')
-            ->withCount(['likes'])
+            ->withCount(['likes', 'retweets'])
+            ->withIsRetweeted()
             ->withIsLiked()
             ->orderBy('created_at', 'desc');
     }
-
+    
     function homeTimeline() {
-        return Tweet::where('tweets.user_id', '=', Auth::user()->id)
-            //My followings tweets
-            ->orWhereIn('tweets.user_id', function ($query) {
+        return Tweet::where('user_id', '=', Auth::user()->id)
+            ->orWhereIn('user_id', function ($query) {
                 $query->selectRaw('followee_id')
                     ->from('follower_followee')
                     ->where('follower_followee.follower_id', '=', Auth::user()->id);
             })
-            ->select('tweets.*')
             ->with('user', 'images')
             ->withIsLiked()
-            ->withCount(['likes'])
+            ->withIsRetweeted()
+            ->withCount(['likes', 'retweets'])
+            //->orderBy('retweeted_at', 'desc')
             ->orderBy('created_at', 'desc');
+        //return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->withCount(['likes'])->orderBy('created_at', 'desc');
     }
 }

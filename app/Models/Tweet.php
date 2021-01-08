@@ -28,7 +28,8 @@ class Tweet extends Model
      * @var array
      */
     protected $casts = [
-        'is_liked' => 'boolean'
+        'is_liked' => 'boolean',
+        'is_retweeted' => 'boolean'
     ];
 
     /**
@@ -52,6 +53,10 @@ class Tweet extends Model
         return $this->belongsToMany(User::class, 'user_tweet_likes');
     }
 
+    function retweets() {
+        return $this->belongsToMany(User::class, 'user_tweet_retweets');
+    }
+
     function scopeWithIsLiked($query) {
         return $query->addSelect([
             'is_liked' => function($query) {
@@ -59,6 +64,18 @@ class Tweet extends Model
                     ->from('user_tweet_likes')
                     ->where('user_tweet_likes.user_id', '=', Auth::user()->id)
                     ->where('user_tweet_likes.tweet_id', '=', DB::raw('tweets.id'))
+                    ->select(DB::raw('COUNT(1)'));
+            }
+        ]);
+    }
+    
+    function scopeWithIsRetweeted($query) {
+        return $query->addSelect([
+            'is_retweeted' => function($query) {
+                return $query
+                    ->from('user_tweet_retweets')
+                    ->where('user_tweet_retweets.user_id', '=', Auth::user()->id)
+                    ->where('user_tweet_retweets.tweet_id', '=', DB::raw('tweets.id'))
                     ->select(DB::raw('COUNT(1)'));
             }
         ]);
