@@ -95,7 +95,7 @@ class User extends Authenticatable
     }
 
     function likes() {
-        return $this->belongsToMany(Tweet::class, 'user_tweet_likes');
+        return $this->belongsToMany(Tweet::class, 'user_tweet_likes')->withTimestamps();
     }
 
     function like(Tweet $tweet) {
