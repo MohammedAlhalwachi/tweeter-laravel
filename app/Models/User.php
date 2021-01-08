@@ -106,20 +106,25 @@ class User extends Authenticatable
     }
     
     function ownTimeline() {
-        return $this->tweets()->with('user', 'images')->withCount(['likes'])->orderBy('created_at', 'desc');
+        return $this->tweets()
+            ->with('user', 'images')
+            ->withCount(['likes'])
+            ->withIsLiked()
+            ->orderBy('created_at', 'desc');
     }
-    
+
     function homeTimeline() {
-        return Tweet::where('user_id', '=', Auth::user()->id)
-            ->orWhereIn('user_id', function ($query) {
+        return Tweet::where('tweets.user_id', '=', Auth::user()->id)
+            //My followings tweets
+            ->orWhereIn('tweets.user_id', function ($query) {
                 $query->selectRaw('followee_id')
                     ->from('follower_followee')
                     ->where('follower_followee.follower_id', '=', Auth::user()->id);
             })
+            ->select('tweets.*')
             ->with('user', 'images')
             ->withIsLiked()
             ->withCount(['likes'])
             ->orderBy('created_at', 'desc');
-        //return $this->hasManyDeepFromRelations($this->followings(), (new User)->tweets())->with('user', 'images')->withCount(['likes'])->orderBy('created_at', 'desc');
     }
 }
