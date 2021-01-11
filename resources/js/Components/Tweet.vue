@@ -1,12 +1,19 @@
 <template>
     <div @click="" class="overflow-hidden p-4 pb-1 mb-3 bg-white shadow transition duration-150 ease-in-out cursor-pointer sm:p-6 sm:pb-2 hover:bg-gray-50 sm:mb-0 last:sm:border-b-0 sm:border-b-2 sm:border-gray-200 sm:last:rounded-b-md sm:first:rounded-t-md">
         <!-- Header: user info -->
-        <header class="font-bold text-gray-700">
+        <header class="text-gray-700">
+            <!-- Retweeter info -->
+            <div class="flex text-gray-400 items-center text-sm mb-3" v-if="retweeted_at">
+                <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current"><g><path d="M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z"></path></g></svg>
+                <inertia-link :href="route('profile.show', {username: retweet_user.username})" class="ml-3 hover:underline">{{ retweet_user.id === $page.props.user.id ? 'You' : retweet_user.name }} Retweeted</inertia-link>
+            </div>
+            
+            <!-- Author info -->
             <div class="flex">
                 <user-avatar :src="user.profile_photo_url" name="test"/>
                 <div class="ml-4 text-sm">
-                    <inertia-link href="#" class="block">{{ user.name }}</inertia-link>
-                    <span class="font-normal text-gray-400">{{ dayjs(created_at).fromNow() }}</span>
+                    <inertia-link :href="route('profile.show', {username: user.username})" class="block font-bold">{{ user.name }}</inertia-link>
+                    <span class="text-gray-400">{{ dayjs(created_at).fromNow() }}</span>
                 </div>
             </div>
         </header>
@@ -16,7 +23,7 @@
 
         <!-- Body -->
         <div class="pl-14">
-            <p class="max-w-xl">{{ body }}</p>
+            <p class="max-w-xl break-words">{{ body }}</p>
             <images-stack :image-sources="images.map(image => image.url)" v-if="images.length > 0" />
         </div>
 
@@ -48,7 +55,7 @@
     export default {
         name: 'Tweet',
         components: {ImagesStack, UserAvatar},
-        props: ['id', 'body', 'user', 'images', 'likes_count', 'is_liked', 'retweets_count', 'is_retweeted', 'created_at'],
+        props: ['id', 'body', 'user', 'images', 'likes_count', 'is_liked', 'retweets_count', 'is_retweeted', 'retweet_user', 'created_at', 'retweeted_at'],
         data() {
             return {
                 bookmarks: 5,

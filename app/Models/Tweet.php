@@ -11,9 +11,10 @@ class Tweet extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'body',
-    ];
+    protected $fillable
+        = [
+            'body',
+        ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -27,57 +28,85 @@ class Tweet extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'is_liked' => 'boolean',
-        'is_retweeted' => 'boolean'
-    ];
+    protected $casts
+        = [
+            'is_liked' => 'boolean',
+            'is_retweeted' => 'boolean',
+            'retweeted_at' => 'datetime',
+        ];
 
     /**
      * The accessors to append to the model's array form.
      *
      * @var array
      */
-    protected $appends = [
-        //'is_liked'
-    ];
+    protected $appends
+        = [
+            //'is_liked'
+        ];
 
-    function user() {
+    function user()
+    {
         return $this->belongsTo(User::class);
     }
-    
-    function images() {
+
+    function retweet_user()
+    {
+        return $this->belongsTo(User::class, 'retweet_user_id', 'id');
+    }
+
+    function images()
+    {
         return $this->hasMany(TweetImage::class);
     }
 
-    function likes() {
+    function likes()
+    {
         return $this->belongsToMany(User::class, 'user_tweet_likes');
     }
 
-    function retweets() {
+    function retweets()
+    {
         return $this->belongsToMany(User::class, 'user_tweet_retweets');
     }
 
-    function scopeWithIsLiked($query) {
-        return $query->addSelect([
-            'is_liked' => function($query) {
-                return $query
-                    ->from('user_tweet_likes')
-                    ->where('user_tweet_likes.user_id', '=', Auth::user()->id)
-                    ->where('user_tweet_likes.tweet_id', '=', DB::raw('tweets.id'))
-                    ->select(DB::raw('COUNT(1)'));
-            }
-        ]);
+    function scopeWithIsLiked($query)
+    {
+        return $query->addSelect(
+            [
+                'is_liked' => function ($query) {
+                    return $query
+                        ->from('user_tweet_likes')
+                        ->where(
+                            'user_tweet_likes.user_id', '=', Auth::user()->id
+                        )
+                        ->where(
+                            'user_tweet_likes.tweet_id', '=',
+                            DB::raw('tweets.id')
+                        )
+                        ->select(DB::raw('COUNT(1)'));
+                }
+            ]
+        );
     }
-    
-    function scopeWithIsRetweeted($query) {
-        return $query->addSelect([
-            'is_retweeted' => function($query) {
-                return $query
-                    ->from('user_tweet_retweets')
-                    ->where('user_tweet_retweets.user_id', '=', Auth::user()->id)
-                    ->where('user_tweet_retweets.tweet_id', '=', DB::raw('tweets.id'))
-                    ->select(DB::raw('COUNT(1)'));
-            }
-        ]);
+
+    function scopeWithIsRetweeted($query)
+    {
+        return $query->addSelect(
+            [
+                'is_retweeted' => function ($query) {
+                    return $query
+                        ->from('user_tweet_retweets')
+                        ->where(
+                            'user_tweet_retweets.user_id', '=', Auth::user()->id
+                        )
+                        ->where(
+                            'user_tweet_retweets.tweet_id', '=',
+                            DB::raw('tweets.id')
+                        )
+                        ->select(DB::raw('COUNT(1)'));
+                }
+            ]
+        );
     }
 }

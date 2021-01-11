@@ -59,9 +59,6 @@
                 form: this.$inertia.form({
                     body: '',
                     images: [],
-                    // errorBag: 'postTweet'
-                // }, {
-                //     bag: 'postTweet',
                 }),
 
                 imagesPreview: [],
@@ -85,9 +82,9 @@
                 this.form.post(route('tweets.store'), {
                     preserveScroll: true,
                     onSuccess: () => {
-                        if (Object.keys(this.$page.props.errors).length === 0) {
-                            this.imagesPreview = [];
-                        }
+                        this.imagesPreview = [];
+                        this.removeImages();
+                        this.form.reset();
                     },
                 });
             },
