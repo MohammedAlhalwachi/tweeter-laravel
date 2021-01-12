@@ -22,11 +22,6 @@
                         <jet-nav-link :href="route('bookmarks.tweets')" :active="route().current('bookmarks.*')">
                             Bookmarks
                         </jet-nav-link>
-
-                        <!-- FIXME:: Remove this. Only for testing -->
-                        <jet-nav-link :href="route('profile.show', {username: 'malhalwachi' })" :active="false">
-                            Test malhalwachi
-                        </jet-nav-link>
                     </div>
 
                     <!-- Settings Dropdown -->
@@ -139,12 +134,6 @@
 
             <!-- Responsive Navigation Menu -->
             <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
-<!--                <div class="pt-2 pb-3 space-y-1">-->
-<!--                    <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">-->
-<!--                        Dashboard-->
-<!--                    </jet-responsive-nav-link>-->
-<!--                </div>-->
-
                 <!-- Responsive Settings Options -->
                 <div class="pt-4 pb-1 border-t border-gray-200">
                     <div class="flex items-center px-4">
@@ -154,7 +143,7 @@
 
                         <div class="ml-3">
                             <div class="text-base font-medium text-gray-800">{{ $page.props.user.name }}</div>
-                            <div class="text-sm font-medium text-gray-500">{{ $page.props.user.email }}</div>
+                            <div class="text-sm font-medium text-gray-500">@{{ $page.props.user.username }}</div>
                         </div>
                     </div>
 
