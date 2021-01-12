@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\WithMetadata;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,14 @@ class Tweet extends Model
      * @var array
      */
     protected $appends = [];
-    
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new WithMetadata);
+    }
+
     function user()
     {
         return $this->belongsTo(User::class);
@@ -105,13 +113,5 @@ class Tweet extends Model
                 }
             ]
         );
-    }
-
-    function scopeWithMetadata($query)
-    {
-        return $query->with('user', 'retweet_user', 'images')
-            ->withIsLiked()
-            ->withIsRetweeted()
-            ->withCount(['likes', 'retweets']);
     }
 }

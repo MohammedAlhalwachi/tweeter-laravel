@@ -12,7 +12,7 @@ class ProfileController extends Controller
     {
         $user = User::where('username', $username)->withCount(
             ['followings', 'followers']
-        )->firstOrFail();
+        )->withIsFollowed()->firstOrFail();
 
         return Inertia::render(
             'Profile', [
@@ -34,7 +34,7 @@ class ProfileController extends Controller
         } elseif ($filter === 'media') {
             return $user->ownTimelineOnlyWithMedia()->get();
         } elseif ($filter === 'likes') {
-            return $user->likes()->withMetadata()->get();
+            return $user->likes()->get();
         }
     }
 }

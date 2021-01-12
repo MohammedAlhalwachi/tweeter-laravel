@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Scopes\WithIsFollowed;
+use App\Scopes\WithMetadata;
 use App\Traits\HasProfileBanner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,7 +62,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends
-        = ['profile_photo_url', 'profile_banner_url', 'is_followed'];
+        = ['profile_photo_url', 'profile_banner_url'];
 
     function follow(User $user)
     {
@@ -82,10 +84,26 @@ class User extends Authenticatable
         $this->followings()->detach($user->id);
     }
 
-    function getIsFollowedAttribute(): bool
+    function scopeWithIsFollowed($query)
     {
-        return $this->followers()->where('follower_id', Auth::user()->id)
-            ->exists();
+        return $query->addSelect(
+            [
+                'is_followed' => function ($query) {
+                    return $query
+                        ->from('follower_followee')
+                        ->where(
+                            'follower_followee.follower_id', '=', Auth::user()->id
+                        )
+                        ->where(
+                            'follower_followee.followee_id', '=',
+                            DB::raw('users.id')
+                        )
+                        ->select(DB::raw('COUNT(1)'));
+                }
+            ]
+        );
+//        return $this->followers()->where('follower_id', Auth::user()->id)
+//            ->exists();
     }
 
     function followers()
@@ -170,8 +188,7 @@ class User extends Authenticatable
                         'CAST(user_tweet_retweets.user_id AS INT) as retweet_user_id'
                     )
                 ]
-            )
-            ->withMetaData();
+            );
         return $myRetweets;
     }
 
@@ -190,8 +207,7 @@ class User extends Authenticatable
                 'tweets.updated_at',
                 DB::raw('NULL as retweeted_at'),
                 DB::raw('NULL as retweet_user_id')
-            )
-            ->withMetaData();
+            );
     }
 
     function tweets()
@@ -219,7 +235,6 @@ class User extends Authenticatable
 
         return
             $this->getMyAndFollowingsTweetsQuery()
-                ->withMetaData()
                 //Retweets
                 ->union($retweets)
                 ->orderBy(
