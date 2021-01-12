@@ -8,12 +8,33 @@ use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
-    function show($username, $filter = null){
-        $user = User::where('username', $username)->withCount(['followings', 'followers'])->firstOrFail()->append('is_followed');
+    function show($username, $filter = null)
+    {
+        $user = User::where('username', $username)->withCount(
+            ['followings', 'followers']
+        )->firstOrFail();
 
-        return Inertia::render('Profile', [
-            'timeline' => $user->ownTimeline()->get(),
-            'profile_user' => $user,
-        ]);
+        return Inertia::render(
+            'Profile', [
+                'timeline'     => $this->getTimeLine($user, $filter),
+                'profile_user' => $user,
+            ]
+        );
+    }
+
+    /**
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function getTimeLine($user, $filter)
+    {
+        if ($filter === null) {
+            return $user->ownTimeline()->get();
+        } elseif ($filter === 'media') {
+            return $user->ownTimelineOnlyWithMedia()->get();
+        } elseif ($filter === 'likes') {
+            return $user->likes()->withMetadata()->get();
+        }
     }
 }

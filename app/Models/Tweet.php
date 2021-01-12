@@ -30,7 +30,7 @@ class Tweet extends Model
      */
     protected $casts
         = [
-            'is_liked' => 'boolean',
+            'is_liked'     => 'boolean',
             'is_retweeted' => 'boolean',
             'retweeted_at' => 'datetime',
         ];
@@ -40,11 +40,8 @@ class Tweet extends Model
      *
      * @var array
      */
-    protected $appends
-        = [
-            //'is_liked'
-        ];
-
+    protected $appends = [];
+    
     function user()
     {
         return $this->belongsTo(User::class);
@@ -108,5 +105,13 @@ class Tweet extends Model
                 }
             ]
         );
+    }
+
+    function scopeWithMetadata($query)
+    {
+        return $query->with('user', 'retweet_user', 'images')
+            ->withIsLiked()
+            ->withIsRetweeted()
+            ->withCount(['likes', 'retweets']);
     }
 }

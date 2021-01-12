@@ -59,7 +59,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['profile_photo_url', 'profile_banner_url'];
+    protected $appends
+        = ['profile_photo_url', 'profile_banner_url', 'is_followed'];
 
     function follow(User $user)
     {
@@ -128,6 +129,20 @@ class User extends Authenticatable
 
     function ownTimeline()
     {
+        $myRetweets = $this->getMyRetweetsQuery();
+
+        return $this->getMyTweetsQuery()
+            ->union($myRetweets)
+            ->orderBy(
+                DB::raw('COALESCE(retweeted_at, created_at)'), 'desc'
+            );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyRetweetsQuery()
+    {
         $myRetweets = Tweet::join(
             'user_tweet_retweets',
             'tweets.id',
@@ -138,7 +153,7 @@ class User extends Authenticatable
             ->where(
                 'user_tweet_retweets.user_id',
                 '=',
-                Auth::user()->id
+                $this->id
             )
             ->select(
                 [
@@ -156,11 +171,15 @@ class User extends Authenticatable
                     )
                 ]
             )
-            ->with('user', 'retweet_user', 'images')
-            ->withIsLiked()
-            ->withIsRetweeted()
-            ->withCount(['likes', 'retweets']);
+            ->withMetaData();
+        return $myRetweets;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getMyTweetsQuery()
+    {
         return $this->tweets()
             ->select(
                 'tweets.id as unique_id',
@@ -172,16 +191,7 @@ class User extends Authenticatable
                 DB::raw('NULL as retweeted_at'),
                 DB::raw('NULL as retweet_user_id')
             )
-            ->union($myRetweets)
-            ->with('user', 'retweet_user', 'images')
-            //VERY IMPORTANT to have the smae order of "with-*" of the other query $myRetweets
-            //TODO:: refactor the retweet query to a single method
-            ->withIsLiked()
-            ->withIsRetweeted()
-            ->withCount(['likes', 'retweets'])
-            ->orderBy(
-                DB::raw('COALESCE(retweeted_at, created_at)'), 'desc'
-            );
+            ->withMetaData();
     }
 
     function tweets()
@@ -189,89 +199,85 @@ class User extends Authenticatable
         return $this->hasMany(Tweet::class);
     }
 
+    function ownTimelineOnlyWithMedia()
+    {
+        $myRetweets = $this->getMyRetweetsQuery()
+            ->has('images');
+
+        return $this->getMyTweetsQuery()
+            ->has('images')
+            ->union($myRetweets)
+            ->orderBy(
+                DB::raw('COALESCE(retweeted_at, created_at)'), 'desc'
+            );
+    }
+
     function homeTimeline()
     {
-        $user = Auth::user();
-
         //Retweets
-        $retweets = Tweet::join(
-            'user_tweet_retweets',
-            'tweets.id',
-            '=',
-            'user_tweet_retweets.tweet_id'
-        )
-            //My retweets
-            ->where(
-                'user_tweet_retweets.user_id',
-                '=',
-                $user->id
-            //Followings retweets
-            )->orWhereIn(
-                'user_tweet_retweets.user_id', function ($query) use ($user) {
+        $retweets = $this->getMyAndFollowingsRetweetsQuery();
+
+        return
+            $this->getMyAndFollowingsTweetsQuery()
+                ->withMetaData()
+                //Retweets
+                ->union($retweets)
+                ->orderBy(
+                    DB::raw('COALESCE(retweeted_at, created_at)'), 'desc'
+                )->take(20);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyAndFollowingsRetweetsQuery()
+    {
+        $retweets = $this->getMyRetweetsQuery()
+            //My followings retweets
+            ->orWhereIn(
+                'user_tweet_retweets.user_id', function ($query) {
                 $query->selectRaw('followee_id')
                     ->from('follower_followee')
                     ->where(
                         'follower_followee.follower_id',
                         '=',
-                        $user->id
+                        $this->id
                     );
             }
-            )
-            ->select(
-                [
-                    DB::raw(
-                        'CONCAT(`user_tweet_retweets`.`user_id`, `user_tweet_retweets`.`tweet_id`, `user_tweet_retweets`.`tweet_id`) as unique_id'
-                    ),
-                    'tweets.id',
-                    'tweets.body',
-                    'tweets.user_id',
-                    'tweets.created_at',
-                    'tweets.updated_at',
-                    'user_tweet_retweets.created_at as retweeted_at',
-                    DB::raw(
-                        'CAST(user_tweet_retweets.user_id AS INT) as retweet_user_id'
-                    )
-                ]
-            )
-            ->with('user', 'retweet_user', 'images')
-            ->withIsLiked()
-            ->withIsRetweeted()
-            ->withCount(['likes', 'retweets']);
+            );
 
-        return
-            Tweet::where('user_id', '=', $user->id)
-                //My followings tweets
-                ->orWhereIn(
-                    'user_id',
-                    function ($query) use ($user) {
-                        $query->selectRaw('followee_id')
-                            ->from('follower_followee')
-                            ->where(
-                                'follower_followee.follower_id',
-                                '=',
-                                $user->id
-                            );
-                    }
-                )
-                ->select(
-                    'tweets.id as unique_id',
-                    'tweets.id',
-                    'tweets.body',
-                    'tweets.user_id',
-                    'tweets.created_at',
-                    'tweets.updated_at',
-                    DB::raw('NULL as retweeted_at'),
-                    DB::raw('NULL as retweet_user_id')
-                )
-                //My retweets
-                ->union($retweets)
-                ->with('user', 'retweet_user', 'images')
-                ->withIsLiked()
-                ->withIsRetweeted()
-                ->withCount(['likes', 'retweets'])
-                ->orderBy(
-                    DB::raw('COALESCE(retweeted_at, created_at)'), 'desc'
-                );
+
+        return $retweets;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyAndFollowingsTweetsQuery()
+    {
+        return Tweet::where('user_id', '=', $this->id)
+            //My followings tweets
+            ->orWhereIn(
+                'user_id',
+                function ($query) {
+                    $query->selectRaw('followee_id')
+                        ->from('follower_followee')
+                        ->where(
+                            'follower_followee.follower_id',
+                            '=',
+                            $this->id
+                        );
+                }
+            )->select(
+                'tweets.id as unique_id',
+                'tweets.id',
+                'tweets.body',
+                'tweets.user_id',
+                'tweets.created_at',
+                'tweets.updated_at',
+                DB::raw('NULL as retweeted_at'),
+                DB::raw('NULL as retweet_user_id')
+            );
     }
 
     protected function profilePhotoDisk()

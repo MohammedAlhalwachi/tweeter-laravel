@@ -21,7 +21,8 @@ module.exports = {
     },
     output: {
         chunkFilename: 'js/[name].js?id=[chunkhash]',
-    }
+    },
+    // devtool: 'inline-source-map',
     // plugins: [
     //     new BundleAnalyzerPlugin()
     // ]
