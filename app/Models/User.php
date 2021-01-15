@@ -151,15 +151,15 @@ class User extends Authenticatable
         $this->bookmarks()->syncWithoutDetaching([$tweet->id]);
     }
 
-    function unbookmark(Tweet $tweet)
-    {
-        $this->bookmarks()->detach($tweet->id);
-    }
-
     function bookmarks()
     {
         return $this->belongsToMany(Tweet::class, 'user_tweet_bookmarks')
             ->withTimestamps();
+    }
+
+    function unbookmark(Tweet $tweet)
+    {
+        $this->bookmarks()->detach($tweet->id);
     }
 
     function ownTimeline()
@@ -169,7 +169,7 @@ class User extends Authenticatable
         return $this->getMyTweetsQuery()
             ->union($myRetweets)
             ->orderBy(
-                DB::raw('COALESCE(retweeted_at, created_at)'), 'desc'
+                DB::raw('order_value'), 'desc'
             );
     }
 
@@ -193,7 +193,7 @@ class User extends Authenticatable
             ->select(
                 [
                     DB::raw(
-                        'CONCAT(`user_tweet_retweets`.`user_id`, `user_tweet_retweets`.`tweet_id`, `user_tweet_retweets`.`tweet_id`) as unique_id'
+                        'CAST(CONCAT("user_tweet_retweets"."user_id", "user_tweet_retweets"."tweet_id", "user_tweet_retweets"."tweet_id") as bigint) as unique_id'
                     ),
                     'tweets.id',
                     'tweets.body',
@@ -203,7 +203,8 @@ class User extends Authenticatable
                     'user_tweet_retweets.created_at as retweeted_at',
                     DB::raw(
                         'CAST(user_tweet_retweets.user_id AS INT) as retweet_user_id'
-                    )
+                    ),
+                    DB::raw('COALESCE(user_tweet_retweets.created_at, tweets.created_at) as order_value')
                 ]
             );
         return $myRetweets;
@@ -223,7 +224,8 @@ class User extends Authenticatable
                 'tweets.created_at',
                 'tweets.updated_at',
                 DB::raw('NULL as retweeted_at'),
-                DB::raw('NULL as retweet_user_id')
+                DB::raw('NULL as retweet_user_id'),
+                DB::raw('COALESCE(tweets.created_at) as order_value')
             );
     }
 
@@ -241,7 +243,7 @@ class User extends Authenticatable
             ->has('images')
             ->union($myRetweets)
             ->orderBy(
-                DB::raw('COALESCE(retweeted_at, created_at)'), 'desc'
+                DB::raw('order_value'), 'desc'
             );
     }
 
@@ -255,7 +257,7 @@ class User extends Authenticatable
                 //Retweets
                 ->union($retweets)
                 ->orderBy(
-                    DB::raw('COALESCE(retweeted_at, created_at)'), 'desc'
+                    DB::raw('order_value'), 'desc'
                 )->take(20);
     }
 
@@ -308,7 +310,8 @@ class User extends Authenticatable
                 'tweets.created_at',
                 'tweets.updated_at',
                 DB::raw('NULL as retweeted_at'),
-                DB::raw('NULL as retweet_user_id')
+                DB::raw('NULL as retweet_user_id'),
+                DB::raw('tweets.created_at as order_value')
             );
     }
 

@@ -140,4 +140,16 @@ class Tweet extends Model
             ]
         );
     }
+
+    function scopeWithEngagementCount($query)
+    {
+        return $query->addSelect(
+            [
+                'engagement_count' => function ($query) {
+                    return $query
+                        ->select(DB::raw('likes_count'));
+                }
+            ]
+        );
+    }
 }

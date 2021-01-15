@@ -32,11 +32,20 @@ class TweetImageFactory extends Factory
         ];
     }
 
+    private function getRandomImageUrl()
+    {
+        $folderPath = Storage::disk('public')->path('testing/images/');
+        $images = glob($folderPath . '*.{jpg,jpeg,png}', GLOB_BRACE);
+
+        $randImagePath = $images[array_rand($images)];
+        return $randImagePath;
+    }
+
     private function getRandomImageStream()
     {
         //$imageStream = fopen('https://picsum.photos/1280/720.jpg', 'r');
         
-        $folderPath = Storage::disk('local')->path('testing/images/');
+        $folderPath = Storage::disk('public')->path('testing/images/');
         $images = glob($folderPath . '*.{jpg,jpeg,png}', GLOB_BRACE);
 
         $randImagePath = $images[array_rand($images)];

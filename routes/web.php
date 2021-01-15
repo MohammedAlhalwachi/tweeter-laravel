@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookmarksController;
+use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileFollowingController;
@@ -28,23 +29,27 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     
     // Explore 
-    Route::prefix('explore')->group(function () {
-        Route::get('/', function () {
-            return Inertia\Inertia::render('Explore');
-        })->name('explore.top');
+//    Route::prefix('explore')->group(function () {
+//        Route::get('/', function () {
+//            return Inertia\Inertia::render('Explore');
+//        })->name('explore.top');
+//
+//        Route::get('/latest', function () {
+//            return Inertia\Inertia::render('Explore');
+//        })->name('explore.latest');
+//
+//        Route::get('/people', function () {
+//            return Inertia\Inertia::render('Explore');
+//        })->name('explore.people');
+//
+//        Route::get('/media', function () {
+//            return Inertia\Inertia::render('Explore');
+//        })->name('explore.media');
+//    });
 
-        Route::get('/latest', function () {
-            return Inertia\Inertia::render('Explore');
-        })->name('explore.latest');
-
-        Route::get('/people', function () {
-            return Inertia\Inertia::render('Explore');
-        })->name('explore.people');
-
-        Route::get('/media', function () {
-            return Inertia\Inertia::render('Explore');
-        })->name('explore.media');
-    });
+    // Explore 
+    Route::get('/explore/', [ExploreController::class, 'showTop'])
+        ->name('explore.top.show');
 
     // Bookmarks 
     Route::get('/bookmarks/{filter?}', [BookmarksController::class, 'show'])

@@ -16,7 +16,7 @@
 
             <tweets-filter-nav class="md:hidden" :links="filterLinks" />
             
-            <TweetsList :tweets="tweets" />
+            <TweetsList :tweets="timeline" />
         </div>
     </div>
 </template>
@@ -32,6 +32,7 @@
         name: "Explore",
         components: {VButton, Label, TweetsFilterNav, TweetsList, AppLayout},
         layout: AppLayout,
+        props: ['timeline'],
         metaInfo() {
             return {
                 title: 'Explore - Tweeter',
@@ -41,79 +42,25 @@
             return {
                 filterLinks: [
                     {
-                        route: route('explore.top'),
-                        active: route().current('explore.top'),
+                        route: route('explore.top.show'),
+                        active: route().current('explore.top.show'),
                         name: 'Top',
                     },
-                    {
-                        route: route('explore.latest'),
-                        active: route().current('explore.latest'),
-                        name: 'Latest',
-                    },
-                    {
-                        route: route('explore.people'),
-                        active: route().current('explore.people'),
-                        name: 'People',
-                    },
-                    {
-                        route: route('explore.media'),
-                        active: route().current('explore.media'),
-                        name: 'Media',
-                    },
-                ],
-                tweets: [
-                    {
-                        user: {
-                            name: 'Mohammed Alhalwachi',
-                        },
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                        images: [
-                            `https://picsum.photos/1280/720`,
-                            // `https://picsum.photos/500/500`,
-                            `https://picsum.photos/500/500`,
-                            `https://picsum.photos/450/2860`,
-                        ],
-                        createdAt: '',
-                    },
-                    {
-                        user: {
-                            name: 'Mohammed Alhalwachi',
-                        },
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                        images: [
-                            `https://picsum.photos/1280/720`,
-                            // `https://picsum.photos/500/500`,
-                            `https://picsum.photos/500/500`,
-                            `https://picsum.photos/450/2860`,
-                        ],
-                        createdAt: '',
-                    },
-                    {
-                        user: {
-                            name: 'Mohammed Alhalwachi',
-                        },
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                        images: [
-                            `https://picsum.photos/1280/720`,
-                            // `https://picsum.photos/500/500`,
-                            `https://picsum.photos/500/500`,
-                            `https://picsum.photos/450/2860`,
-                        ],
-                        createdAt: '',
-                    },
-                    {
-                        user: {
-                            name: 'Mohammed Alhalwachi',
-                        },
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lorem a ipsum iaculis pulvinar. Nunc consectetur placerat tincidunt. Nulla facilisi. Suspendisse erat curae.',
-                        images: [
-                            `https://picsum.photos/1280/720`,
-                            // `https://picsum.photos/500/500`,
-                            `https://picsum.photos/500/500`,
-                            `https://picsum.photos/450/2860`,
-                        ],
-                        createdAt: '',
-                    },
+                    // {
+                    //     route: route('explore.latest'),
+                    //     active: route().current('explore.latest'),
+                    //     name: 'Latest',
+                    // },
+                    // {
+                    //     route: route('explore.people'),
+                    //     active: route().current('explore.people'),
+                    //     name: 'People',
+                    // },
+                    // {
+                    //     route: route('explore.media'),
+                    //     active: route().current('explore.media'),
+                    //     name: 'Media',
+                    // },
                 ],
             }
         },

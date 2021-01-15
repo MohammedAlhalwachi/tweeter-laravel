@@ -7,7 +7,7 @@
                     <!-- Logo -->
                     <div class="flex flex-shrink-0 items-center">
                         <inertia-link :href="route('home')">
-                            <jet-application-mark class="block w-8 w-auto text-blue-500" />
+                            <jet-application-mark class="block w-8 w-auto " />
                         </inertia-link>
                     </div>
 
@@ -16,7 +16,7 @@
                         <jet-nav-link :href="route('home')" :active="route().current('home')">
                             Home
                         </jet-nav-link>
-                        <jet-nav-link :href="route('explore.top')" :active="route().current('explore.*')">
+                        <jet-nav-link :href="route('explore.top.show')" :active="route().current('explore.*')">
                             Explore
                         </jet-nav-link>
                         <jet-nav-link :href="route('bookmarks.show')" :active="route().current('bookmarks.show')">
@@ -235,7 +235,7 @@
                         d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                 </svg>
             </footer-nav-link>
-            <footer-nav-link :href="route('explore.top')" :active="route().current('explore.*')">
+            <footer-nav-link :href="route('explore.top.show')" :active="route().current('explore.*')">
                 <svg class="inline-block" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
                      clip-rule="evenodd">
                     <path
