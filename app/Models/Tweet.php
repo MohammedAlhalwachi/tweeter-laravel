@@ -31,6 +31,7 @@ class Tweet extends Model
      */
     protected $casts
         = [
+            'is_bookmarked'     => 'boolean',
             'is_liked'     => 'boolean',
             'is_retweeted' => 'boolean',
             'retweeted_at' => 'datetime',
@@ -63,6 +64,11 @@ class Tweet extends Model
     function images()
     {
         return $this->hasMany(TweetImage::class);
+    }
+
+    function bookmarks()
+    {
+        return $this->belongsToMany(User::class, 'user_tweet_bookmarks');
     }
 
     function likes()
@@ -107,6 +113,26 @@ class Tweet extends Model
                         )
                         ->where(
                             'user_tweet_retweets.tweet_id', '=',
+                            DB::raw('tweets.id')
+                        )
+                        ->select(DB::raw('COUNT(1)'));
+                }
+            ]
+        );
+    }
+
+    function scopeWithIsBookmarked($query)
+    {
+        return $query->addSelect(
+            [
+                'is_bookmarked' => function ($query) {
+                    return $query
+                        ->from('user_tweet_bookmarks')
+                        ->where(
+                            'user_tweet_bookmarks.user_id', '=', Auth::user()->id
+                        )
+                        ->where(
+                            'user_tweet_bookmarks.tweet_id', '=',
                             DB::raw('tweets.id')
                         )
                         ->select(DB::raw('COUNT(1)'));

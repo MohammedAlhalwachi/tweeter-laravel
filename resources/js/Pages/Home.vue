@@ -4,16 +4,19 @@
             <tweet-form />
             
             <div class="mt-8">
-                <TweetsList :tweets="timeline"  v-if="timeline.length > 0"/>
-                <div class="flex flex flex-col justify-center items-center text-2xl font-semibold text-center text-gray-800 mt-24" v-else>
-                    <span class="text-6xl">😃</span>
-                    <span class="mt-8 text-3xl">Welcome</span>
-                    <p class="text-xl font-medium mt-8">
-                        No tweets yet!
-                        <br>
-                        Try following new people
-                    </p>
-                </div>
+                <TweetsList :tweets="timeline">
+                    <template #emptyList>
+                        <div class="flex flex flex-col justify-center items-center text-2xl font-semibold text-center text-gray-800 mt-24">
+                            <span class="text-6xl">😃</span>
+                            <span class="mt-8 text-3xl">Welcome</span>
+                            <p class="text-xl font-medium mt-8">
+                                No tweets yet!
+                                <br>
+                                Try following new people
+                            </p>
+                        </div>
+                    </template>
+                </TweetsList>
             </div>
         </div>
 
@@ -40,8 +43,7 @@
             }
         },
         data() {
-            return {
-            }
+            return {}
         },
     }
 </script>

@@ -15,6 +15,7 @@ class WithMetadata implements Scope
         $builder->with('user', 'retweet_user', 'images')
             ->withIsLiked()
             ->withIsRetweeted()
-            ->withCount(['likes', 'retweets']);
+            ->withIsBookmarked()
+            ->withCount(['retweets', 'likes', 'bookmarks']);
     }
 }

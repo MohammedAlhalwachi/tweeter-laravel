@@ -92,7 +92,8 @@ class User extends Authenticatable
                     return $query
                         ->from('follower_followee')
                         ->where(
-                            'follower_followee.follower_id', '=', Auth::user()->id
+                            'follower_followee.follower_id', '=',
+                            Auth::user()->id
                         )
                         ->where(
                             'follower_followee.followee_id', '=',
@@ -102,8 +103,8 @@ class User extends Authenticatable
                 }
             ]
         );
-//        return $this->followers()->where('follower_id', Auth::user()->id)
-//            ->exists();
+        //        return $this->followers()->where('follower_id', Auth::user()->id)
+        //            ->exists();
     }
 
     function followers()
@@ -143,6 +144,22 @@ class User extends Authenticatable
     function unretweet(Tweet $tweet)
     {
         $this->retweets()->detach($tweet->id);
+    }
+
+    function bookmark(Tweet $tweet)
+    {
+        $this->bookmarks()->syncWithoutDetaching([$tweet->id]);
+    }
+
+    function unbookmark(Tweet $tweet)
+    {
+        $this->bookmarks()->detach($tweet->id);
+    }
+
+    function bookmarks()
+    {
+        return $this->belongsToMany(Tweet::class, 'user_tweet_bookmarks')
+            ->withTimestamps();
     }
 
     function ownTimeline()

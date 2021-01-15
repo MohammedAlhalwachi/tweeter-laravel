@@ -27,7 +27,7 @@ class ProfileController extends Controller
      *
      * @return mixed
      */
-    public function getTimeLine($user, $filter)
+    private function getTimeLine($user, $filter)
     {
         if ($filter === null) {
             return $user->ownTimeline()->get();

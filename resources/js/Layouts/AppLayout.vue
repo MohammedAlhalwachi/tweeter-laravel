@@ -19,7 +19,7 @@
                         <jet-nav-link :href="route('explore.top')" :active="route().current('explore.*')">
                             Explore
                         </jet-nav-link>
-                        <jet-nav-link :href="route('bookmarks.tweets')" :active="route().current('bookmarks.*')">
+                        <jet-nav-link :href="route('bookmarks.show')" :active="route().current('bookmarks.show')">
                             Bookmarks
                         </jet-nav-link>
                     </div>
@@ -242,7 +242,7 @@
                         d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm1.476 14.955c.988-.405 1.757-1.211 2.116-2.216l2.408-6.739-6.672 2.387c-1.006.36-1.811 1.131-2.216 2.119l-3.065 7.494 7.429-3.045zm-.122-4.286c.551.551.551 1.446 0 1.996-.551.551-1.445.551-1.996 0-.551-.55-.551-1.445 0-1.996.551-.551 1.445-.551 1.996 0z"/>
                     </svg>
             </footer-nav-link>
-            <footer-nav-link :href="route('bookmarks.tweets')" :active="route().current('bookmarks.*')">
+            <footer-nav-link :href="route('bookmarks.show')" :active="route().current('bookmarks.show')">
                 <svg class="inline-block w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"></path>
                 </svg>
