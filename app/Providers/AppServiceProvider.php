@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\FlysystemAdapters\CloudinaryAdapterExtension;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 use League\Flysystem\Filesystem;
@@ -27,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+        
         Storage::extend('cloudinary', function ($app, $config) {
             $container = new CloudinaryAdapterExtension([
                 'cloud_name' => $config['cloud_name'],
