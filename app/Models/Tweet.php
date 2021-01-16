@@ -31,10 +31,11 @@ class Tweet extends Model
      */
     protected $casts
         = [
-            'is_bookmarked'     => 'boolean',
-            'is_liked'     => 'boolean',
-            'is_retweeted' => 'boolean',
-            'retweeted_at' => 'datetime',
+            'is_bookmarked' => 'boolean',
+            'is_liked'      => 'boolean',
+            'is_retweeted'  => 'boolean',
+            'retweeted_at'  => 'datetime',
+            'order_value'  => 'datetime',
         ];
 
     /**
@@ -129,7 +130,8 @@ class Tweet extends Model
                     return $query
                         ->from('user_tweet_bookmarks')
                         ->where(
-                            'user_tweet_bookmarks.user_id', '=', Auth::user()->id
+                            'user_tweet_bookmarks.user_id', '=',
+                            Auth::user()->id
                         )
                         ->where(
                             'user_tweet_bookmarks.tweet_id', '=',

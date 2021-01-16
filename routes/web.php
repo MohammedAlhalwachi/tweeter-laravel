@@ -48,8 +48,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 //    });
 
     // Explore 
-    Route::get('/explore/', [ExploreController::class, 'showTop'])
+    Route::get('/explore/top', [ExploreController::class, 'showTop'])
         ->name('explore.top.show');
+    Route::get('/explore/latest', [ExploreController::class, 'showLatest'])
+        ->name('explore.latest.show');
+    Route::get('/explore/people', [ExploreController::class, 'showPeople'])
+        ->name('explore.people.show');
+    Route::get('/explore/media', [ExploreController::class, 'showMedia'])
+        ->name('explore.media.show');
 
     // Bookmarks 
     Route::get('/bookmarks/{filter?}', [BookmarksController::class, 'show'])
