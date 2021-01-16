@@ -64,8 +64,6 @@
                     current_password: '',
                     password: '',
                     password_confirmation: '',
-                }, {
-                    bag: 'updatePassword',
                 }),
             }
         },
@@ -73,10 +71,11 @@
         methods: {
             updatePassword() {
                 this.form.put(route('user-password.update'), {
-                    preserveScroll: true
-                }).then(() => {
-                    this.$refs.current_password.focus()
-                })
+                    onFinish: () => {
+                        this.$refs.current_password.focus()
+                    },
+                    preserveScroll: true,
+                });
             },
         },
     }
