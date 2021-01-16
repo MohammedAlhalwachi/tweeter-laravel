@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Tweet;
 use App\Models\User;
+use App\Scopes\WithMetadata;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -54,12 +55,27 @@ class DatabaseSeeder extends Seeder
             ->merge($demoAccounts)
             ->push($myAccount);
 
+        $tweets = Tweet::withoutGlobalScope(WithMetadata::class)->take(200)->get();
+
         foreach ($users as $user) {
-            for ($i = 0; $i < random_int(10, 20); $i++){
+            for ($i = 0; $i < random_int(13, 20); $i++){
+                //follow another user
                 $otherUser = $users->random();
                 while ($otherUser->is($user)) $otherUser = $users->random();
-
                 $user->follow($otherUser);
+
+                //like tweet
+                $tweet = $tweets->random();
+                $user->like($tweet);
+                //bookmark tweet
+                $tweet = $tweets->random();
+                $user->bookmark($tweet);
+            }
+            
+            for ($i = 0; $i < random_int(0, 2); $i++){
+                //retweet tweet
+                $tweet = $tweets->random();
+                $user->retweet($tweet);
             }
         }
 

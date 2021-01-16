@@ -258,7 +258,7 @@ class User extends Authenticatable
                 ->union($retweets)
                 ->orderBy(
                     DB::raw('order_value'), 'desc'
-                )->take(20);
+                )->take(50);
     }
 
     /**

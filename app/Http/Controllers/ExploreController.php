@@ -17,7 +17,7 @@ class ExploreController extends Controller
 
     function showTop()
     {
-        $topTweets = Tweet::orderBy('likes_count', 'desc')->where('body', 'like', '%'.$this->searchQuery.'%')->take(10)->get();
+        $topTweets = Tweet::orderBy('likes_count', 'desc')->where('body', 'like', '%'.$this->searchQuery.'%')->take(50)->get();
 
         return Inertia::render(
             'Explore', [
@@ -29,7 +29,7 @@ class ExploreController extends Controller
     
     function showLatest()
     {
-        $latestTweets = Tweet::orderBy('created_at', 'desc')->where('body', 'like', '%'.$this->searchQuery.'%')->take(10)->get();
+        $latestTweets = Tweet::orderBy('created_at', 'desc')->where('body', 'like', '%'.$this->searchQuery.'%')->take(50)->get();
 
         return Inertia::render(
             'Explore', [
@@ -41,7 +41,7 @@ class ExploreController extends Controller
 
     function showPeople()
     {
-        $topPeople = User::withCount('followers')->orderBy('followers_count', 'desc')->where('name', 'like', '%'.$this->searchQuery.'%')->take(10)->get();
+        $topPeople = User::withCount('followers')->orderBy('followers_count', 'desc')->where('name', 'like', '%'.$this->searchQuery.'%')->take(50)->get();
 
         return Inertia::render(
             'Explore', [
@@ -53,7 +53,7 @@ class ExploreController extends Controller
 
     function showMedia()
     {
-        $topTweets = Tweet::has('images')->orderBy('likes_count', 'desc')->where('body', 'like', '%'.$this->searchQuery.'%')->take(10)->get();
+        $topTweets = Tweet::has('images')->orderBy('likes_count', 'desc')->where('body', 'like', '%'.$this->searchQuery.'%')->take(50)->get();
 
         return Inertia::render(
             'Explore', [
