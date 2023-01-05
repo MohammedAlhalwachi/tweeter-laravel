@@ -5,7 +5,7 @@ RUN apk add --update --no-cache g++ gcc autoconf make libc-dev pkgconf re2c imag
     && docker-php-ext-enable imagick
 
 
-RUN apk --update add nghttp2-dev nodejs npm
+# RUN apk --update add nghttp2-dev nodejs npm
 
 COPY . .
 
