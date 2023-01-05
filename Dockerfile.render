@@ -1,8 +1,5 @@
 FROM richarvey/nginx-php-fpm:1.9.1
 
-#RUN apk update && apk add -y \
-#    libmagickwand-dev --no-install-recommends
-#
 RUN apk add --update --no-cache g++ gcc autoconf make libc-dev pkgconf re2c imagemagick-dev libtool \
     && pecl install imagick \
     && docker-php-ext-enable imagick
@@ -11,7 +8,6 @@ RUN apk add --update --no-cache g++ gcc autoconf make libc-dev pkgconf re2c imag
 RUN apk --update add nghttp2-dev nodejs npm
 
 COPY . .
-
 
 # Image config
 ENV SKIP_COMPOSER 1
