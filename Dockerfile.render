@@ -12,9 +12,6 @@ RUN apk --update add nghttp2-dev nodejs npm
 
 COPY . .
 
-RUN npm install \
-    && npm run prod
-
 
 # Image config
 ENV SKIP_COMPOSER 1
